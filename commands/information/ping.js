@@ -28,7 +28,25 @@ module.exports = {
       `it took \`${ping}ms\` to ping **fivem servers**`,
       `it took \`${ping}ms\` to ping **new york**`,
       `it took \`${ping}ms\` to ping **my black airforces**`,
-      `it took \`${ping}ms\` to ping **netflix database**`
+      `it took \`${ping}ms\` to ping **netflix database**`,
+      `it took \`${ping}ms\` to ping **your cat**`,
+      `it took \`${ping}ms\` to ping **the moon**`,
+      `it took \`${ping}ms\` to ping **Elon Musk's Tesla in space**`,
+      `it took \`${ping}ms\` to ping **the Bermuda Triangle**`,
+      `it took \`${ping}ms\` to ping **the Matrix**`,
+      `it took \`${ping}ms\` to ping **Mars rover**`,
+      `it took \`${ping}ms\` to ping **Atlantis**`,
+      `it took \`${ping}ms\` to ping **Area 51**`,
+      `it took \`${ping}ms\` to ping **the Loch Ness Monster**`,
+      `it took \`${ping}ms\` to ping **my grandma's cookies**`,
+      `it took \`${ping}ms\` to ping **the International Space Station**`,
+      `it took \`${ping}ms\` to ping **Santa Claus' workshop**`,
+      `it took \`${ping}ms\` to ping **the Great Wall of China**`,
+      `it took \`${ping}ms\` to ping **the center of the Earth**`,
+      `it took \`${ping}ms\` to ping **a parallel universe**`,
+      `it took \`${ping}ms\` to ping **the lost city of Atlantis**`,
+      `it took \`${ping}ms\` to ping **the edge of the universe**`,
+      `it took \`${ping}ms\` to ping **my favorite TV show's script**`      
     ]
     const random = Math.floor(Math.random() * ping1.length);
     message.reply(ping1[random]);
