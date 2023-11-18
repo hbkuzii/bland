@@ -9,9 +9,23 @@ module.exports = {
   example: "@curly 10m",
   usage: "(member) (duration)",
   execute(message, args) {
-    const timeUser = message.mentions.members.first() || message.guild.members.cache.get(args[0]);
-    const timeMember = message.guild.members.cache.get(timeUser.id);
+    let timeUser = message.mentions.members.first() || message.guild.members.cache.get(args[0]);
 
+    if (!timeUser) {
+      const username = args[0];
+      const foundMember = message.guild.members.cache.find((member) =>
+        member.user.username.toLowerCase() === username.toLowerCase() ||
+        member.id === username
+      );
+
+      if (foundMember) {
+        timeUser = foundMember;
+      } else {
+        return ctx.warn('User not found. Please mention a valid user or provide a valid user ID.');
+      }
+    }
+    
+    const timeMember = message.guild.members.cache.get(timeUser.id);
     if (!timeMember) {
       return ctx.warn('The mentioned user is not in the server.');
     }
@@ -36,7 +50,6 @@ module.exports = {
     timeMember.timeout(duration, reason)
       .then(() => {
         ctx.approve(`**${timeUser.user}** has been timed out for ${formatDuration(duration)}`)
-        message.reply({ embeds: [embed] });
       })
       .catch(err => {
       });

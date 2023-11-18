@@ -9,7 +9,22 @@ module.exports = {
   example: "@curly",
   usage: "(member)",
   execute(message, args) {
-    const untimedUser = message.mentions.members.first() || message.guild.members.cache.get(args[0]);
+    let untimedUser = message.mentions.members.first() || message.guild.members.cache.get(args[0]);
+
+    if (!untimedUser) {
+      const username = args[0];
+      const foundMember = message.guild.members.cache.find((member) =>
+        member.user.username.toLowerCase() === username.toLowerCase() ||
+        member.id === username
+      );
+
+      if (foundMember) {
+        untimedUser = foundMember;
+      } else {
+        return ctx.warn('User not found. Please mention a valid user or provide a valid user ID.');
+      }
+    }
+
     const untimedMember = message.guild.members.cache.get(untimedUser.id);
 
     if (!untimedMember) {
