@@ -280,6 +280,14 @@ return false; // Prevent the default context menu
                       </div>
                   
 
+                      <p class="command-item" onclick="toggleCommandInfo('previewwebsite')">
+                          <span>previewwebsite</span> Preview a website by uploading its HTML file
+                      </p>
+                      <div id="previewwebsite-info" style="display: none;">
+                          <p>ㅤㅤㅤㅤUsage: previewwebsite &lt;html-file&gt;</p>
+                      </div>
+                  
+
                       <p class="command-item" onclick="toggleCommandInfo('ytsummarize')">
                           <span>ytsummarize</span> Summarize a YouTube video
                       </p>
@@ -298,7 +306,7 @@ return false; // Prevent the default context menu
                           <span>timeout</span> Timeout a user
                       </p>
                       <div id="timeout-info" style="display: none;">
-                          <p>ㅤㅤㅤㅤUsage: timeout (member)</p>
+                          <p>ㅤㅤㅤㅤUsage: timeout (member) (duration)</p>
                       </div>
                   
             </div>

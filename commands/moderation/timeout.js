@@ -32,7 +32,7 @@ module.exports = {
     const duration = parseDuration(rawDuration);
 
     if (!duration || isNaN(duration)) {
-      return ctx.warn('Please provide a valid duration for the timeout. (\`s\`/\`m\`/\`h\`/\`d)');
+      return ctx.warn('Please provide a valid duration for the timeout. (\`s\`/\`m\`/\`h\`/\`d\`)');
     }
 
     const reason = args.slice(2).join(' ') || 'No reason given';
