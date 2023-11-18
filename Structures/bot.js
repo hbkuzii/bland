@@ -126,7 +126,7 @@ if (command.permissions) {
               return;
             }
             
-            message.reply({ embeds: [embed] });
+            return message.reply({ embeds: [embed] });
                
           }
         }        

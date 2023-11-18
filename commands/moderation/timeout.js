@@ -9,10 +9,6 @@ module.exports = {
   example: "@curly 10m",
   usage: "(member) (duration)",
   execute(message, args) {
-    if (!args[0]) {
-      return;
-    }
-
     const timeUser = message.mentions.members.first() || message.guild.members.cache.get(args[0]);
     const timeMember = message.guild.members.cache.get(timeUser.id);
 

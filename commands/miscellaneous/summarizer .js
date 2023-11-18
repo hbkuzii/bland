@@ -12,10 +12,6 @@ module.exports = {
   example: "yt-summarize https://www.youtube.com/watch?v=nKWnDCaiVJo",
   category: "miscellaneous",
   execute(message, args) {
-    if (!args[0]) {
-      return;
-    }
-
     const url = args[0];
     summarizeYouTubeVideo(message, url);
   },

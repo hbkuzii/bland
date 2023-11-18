@@ -8,10 +8,6 @@ module.exports = {
   example: "hello world",
   category: "miscellaneous",
   execute(message, args) {
-    if (!args[0]) {
-      return;
-    }
-
     const emojifiedMessage = emojifyText(args.join(' '));
     message.reply(emojifiedMessage);
   },

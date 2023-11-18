@@ -9,10 +9,6 @@ module.exports = {
   example: "@curly",
   usage: "(member)",
   execute(message, args) {
-    if (!args[0]) {
-      return;
-    }
-
     const untimedUser = message.mentions.members.first() || message.guild.members.cache.get(args[0]);
     const untimedMember = message.guild.members.cache.get(untimedUser.id);
 
