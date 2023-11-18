@@ -4,9 +4,12 @@ const path = require('path');
 const config = require('../../config.json');
 
 module.exports = {
-  name: 'help',
-  description: 'Display all available commands',
+  name: "help",
+  category: 'Information',
   send: false,
+  aliases: ['h', "commands", "cmds"],
+  description: 'Display a list of available commands',
+  permissions: ['SendMessages'],
   execute(message, args) {
     const commandFiles = fs.readdirSync(path.join(__dirname, '../../commands'));
 

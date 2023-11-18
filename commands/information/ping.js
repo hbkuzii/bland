@@ -8,6 +8,7 @@ module.exports = {
   description: 'Show websocket latency',
   permissions: ['SendMessages'],
   send: false,
+  category: 'Information',
   execute(message, args) {
     const ping = Date.now() - message.createdTimestamp;
     let ping1 = [
