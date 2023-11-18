@@ -302,6 +302,14 @@ return false; // Prevent the default context menu
             <div class="Moderation">
                 <h1>ㅤModeration</h1>
                 
+                      <p class="command-item" onclick="toggleCommandInfo('kick')">
+                          <span>kick</span> Kick a user
+                      </p>
+                      <div id="kick-info" style="display: none;">
+                          <p>ㅤㅤㅤㅤUsage: kick (member) &lt;reason&gt;</p>
+                      </div>
+                  
+
                       <p class="command-item" onclick="toggleCommandInfo('timeout')">
                           <span>timeout</span> Timeout a user
                       </p>

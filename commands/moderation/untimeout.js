@@ -6,7 +6,7 @@ module.exports = {
   description: 'Untimeout a user',
   permissions: ['MuteMembers'],
   category: "Moderation",
-  example: "@curly",
+  example: "curly",
   usage: "(member)",
   execute(message, args) {
     let untimedUser = message.mentions.members.first() || message.guild.members.cache.get(args[0]);

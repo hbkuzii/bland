@@ -16,7 +16,8 @@ const client = new Client({
     GatewayIntentBits.GuildPresences,
   ],
 });
-
+const activeBans = new Map();
+client.activeBans = new Map();
 client.commands = new Map();
 client.db = require("quick.db");
 
@@ -32,6 +33,40 @@ client.once('ready', () => {
     name: "bland",
     state: "🛰️ /bland",
   });
+    // Loop through activeBans map and set up timers for any ongoing temporary bans
+    activeBans.forEach(async (banData, key) => {
+      const currentTime = Date.now();
+      const timeLeft = banData.duration - (currentTime - banData.startTime);
+  
+      if (timeLeft > 0) {
+        activeBans.set(key, {
+          ...banData,
+          timeout: setTimeout(async () => {
+            const timeoutData = activeBans.get(key);
+            
+            // Your existing unban logic here
+            const guildId = key.split('.')[0];
+            const guild = client.guilds.cache.get(guildId);
+            if (guild) {
+              const targetUser = await guild.members.fetch(key.split('.')[1]);
+              if (targetUser) {
+                await guild.members.unban(targetUser.id, 'Temporary ban expired');
+                const formattedDuration = formatDuration(timeoutData.duration);
+                guild.channels.cache
+                  .find((channel) => channel.type === 'text')
+                  .send(`**${targetUser.user.tag}** has been unbanned after the temporary ban${formattedDuration}.`);
+              }
+            }
+  
+            // Remove the ban data from the map
+            activeBans.delete(key);
+          }, timeLeft),
+        });
+      } else {
+        // The ban has already expired, perform cleanup if needed
+        activeBans.delete(key);
+      }
+    });
 });
 commandHandler(client);
 

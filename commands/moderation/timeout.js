@@ -6,7 +6,7 @@ module.exports = {
   description: 'Timeout a user',
   permissions: ['MuteMembers'],
   category: "Moderation",
-  example: "@curly 10m",
+  example: "curly 10m",
   usage: "(member) (duration)",
   execute(message, args) {
     let timeUser = message.mentions.members.first() || message.guild.members.cache.get(args[0]);
