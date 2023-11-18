@@ -39,7 +39,7 @@ module.exports = {
 
     timeMember.timeout(duration, reason)
       .then(() => {
-        ctx.approve(`**${timeUser.user.tag}** has been timed out for ${formatDuration(duration)}`)
+        ctx.approve(`**${timeUser.user}** has been timed out for ${formatDuration(duration)}`)
         message.reply({ embeds: [embed] });
       })
       .catch(err => {
