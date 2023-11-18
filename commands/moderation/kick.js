@@ -36,7 +36,13 @@ module.exports = {
       })
       .catch(err => {
         console.error(err);
-        ctx.error('An error occurred while trying to kick the user.');
+        if (err.code === 50013) {
+          return ctx.warn(`I do not have the necessary permissions to **${targetMember.user.tag}**.`);
+        } else if (err.code === 50051) { 
+          return ctx.warn(`I cannot kick ${targetMember.user.tag} due to role hierarchy.`);
+        } else {
+          ctx.error(`An error occurred while trying to kick the user.`);
+        }
       });
   },
 };
