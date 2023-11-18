@@ -7,48 +7,44 @@ module.exports = {
     description: 'Evaluate JavaScript or Python code',
     ownerOnly: true,
     send: false,
-    execute(message, args) {
+    async execute(message, args) {
         // Check if the user executing the command is the owner
         if (message.author.id === '1068177499231621270') {
+            const script = args.join(' ').replace('```', '');
+
             try {
-                // Join the arguments to form a single string of code
-                const code = args.join(' ');
+                var evaluated;
 
-                // Determine if it's Python code or JavaScript code
-                const isPython = code.startsWith('py ');
+                try {
+                    evaluated = await eval(script);
+                } catch (error) {
+                    console.error(error);
+                    return message.react('‼️');
+                }
 
-                // Remove 'py ' if it's Python code
-                const codeToExecute = isPython ? code.slice(3) : code;
+                if (typeof evaluated !== 'string') evaluated = require('util').inspect(evaluated);
 
-                // Execute the code
-                if (isPython) {
-                    // Execute Python code using python-shell
-                    PythonShell.runString(codeToExecute, null, function (err, resultArr) {
-                        if (err) {
-                            message.channel.send(`Error: \`\`\`python\n${err}\n\`\`\``);
-                        } else {
-                            const result = resultArr.join('\n');
-                            // Use util.inspect to nicely format the result
-                            const formattedResult = inspect(result, { depth: 0 });
-                            // Send the result as a message
-                            message.channel.send(`\`\`\`python\n${formattedResult}\n\`\`\``);
-                        }
+                message.react('✅');
+
+                if (evaluated.length > 2000) {
+                    const buffer = Buffer.from(evaluated, 'utf-8');
+
+                    message.channel.send({
+                        files: [
+                            {
+                                attachment: buffer,
+                                name: 'code.txt'
+                            }
+                        ]
                     });
                 } else {
-                    // Execute JavaScript code
-                    let result = eval(codeToExecute);
-                    // Use util.inspect to nicely format the result
-                    result = inspect(result, { depth: 0 });
-                    // Send the result as a message
-                    ctx.normal(`\`\`\`js\n${result}\n\`\`\``);
+                    message.channel.send(evaluated);
                 }
             } catch (error) {
-                // If there's an error, send the error message
-                ctx.normal(`\`\`\`js\n${error}\n\`\`\``);
+                return new bot.error(
+                    message, 'evaluate', error
+                );
             }
-        } else {
-            // If the user is not the owner, inform them that they are not authorized
-            message.reply('You are not authorized to use this command.');
         }
-    },
+    }
 };

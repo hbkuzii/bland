@@ -302,6 +302,14 @@ return false; // Prevent the default context menu
             <div class="Moderation">
                 <h1>ㅤModeration</h1>
                 
+                      <p class="command-item" onclick="toggleCommandInfo('ban')">
+                          <span>ban</span> Ban a user
+                      </p>
+                      <div id="ban-info" style="display: none;">
+                          <p>ㅤㅤㅤㅤUsage: ban (member) &lt;reason&gt;</p>
+                      </div>
+                  
+
                       <p class="command-item" onclick="toggleCommandInfo('kick')">
                           <span>kick</span> Kick a user
                       </p>
