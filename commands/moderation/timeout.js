@@ -6,8 +6,8 @@ module.exports = {
   description: 'Timeout a user',
   permissions: ['MuteMembers'],
   category: "Moderation",
-  example: "@curly",
-  usage: "(member)",
+  example: "@curly 5m",
+  usage: "(member) (duration)",
   execute(message, args) {
     if (!args[0]) {
       return;
