@@ -111,7 +111,7 @@ if (command.permissions) {
               .setAuthor({ name: `${module}`, iconURL: client.user.displayAvatarURL({ dynamic: true })})
               .setDescription(`${command.description}`)
               .addFields(
-                { name: 'module', value: `>>> \`\`\`bf\nSyntax ,${command.name} ${usage}\`\`\``, inline: true})
+                { name: 'usage', value: `>>> \`\`\`bf\nSyntax ,${command.name} ${usage}\`\`\``, inline: true})
                 .setFooter({ text: `Module: ${module}`, iconURL: message.author.displayAvatarURL({ dynamic: true }) })
 
               .setTimestamp()
