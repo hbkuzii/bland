@@ -26,7 +26,7 @@ module.exports = {
       db.delete(`pfpchannel_${message.guild.id}`);
       ctx.approve('Poster channel cleared.');
     } else {
-      ctx.warn('Invalid action. Use `channel` to set a channel or `clear` to clear the channel.');
+      ctx.warn('Invalid action. `channel` to set a channel or `clear` to clear the channel.');
     }
   },
 };
