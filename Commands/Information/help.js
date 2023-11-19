@@ -37,7 +37,6 @@ module.exports = {
     }
 
       ctx.normal(`>>> [**bland.world**](https://bland.world)\n[**bland.world/help**](https://bland.world/help)\n[**bland.world/discord**](https://bland.world/discord)`)
-      message.channel.stopTyping();
 
     // for (const [category, commands] of Object.entries(categories)) {
       // embed.addFields({ name: category, value: commands.join('\n') });
