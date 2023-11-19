@@ -35,7 +35,8 @@ module.exports = {
 
                 if (command.usage) {
                   const aliases = command.aliases ? ` [${command.aliases.join('|')}]` : '';
-                  const syntax = command.usage.replace(/</g, '&lt;').replace(/>/g, '&gt;');
+                  const syntax = (command.usage || '').replace(/</g, '&lt;').replace(/>/g, '&gt;') || 'No usage information available.';
+              
                   const commandDescription = command.description;
                   const hasSubcommands = command.subcommands ? '*' : '';
               
@@ -52,7 +53,14 @@ module.exports = {
                           <p>ㅤㅤㅤㅤUsage: ${command.name} ${syntax}${subcommandsHTML}</p>
                       </div>
                   `);
-              }              
+              } else {
+                  // Handle the case where command.usage is not defined
+                  commandCategories[category].push(`
+                      <p class="command-item" onclick="toggleCommandInfo('${command.name}')">
+                          <span>${command.name}</span> ${command.description}
+                      </p>
+                  `);
+              }          
           });          
         });
 

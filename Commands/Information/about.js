@@ -8,7 +8,6 @@ module.exports = {
   description: 'Display information about the bot',
   permissions: ['SendMessages'],
   send: false,
-  category: 'Information',
   execute(message) {
     const botInfoEmbed = new EmbedBuilder()
       .setColor(config.color)

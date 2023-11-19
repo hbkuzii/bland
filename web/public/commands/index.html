@@ -262,6 +262,35 @@ return false; // Prevent the default context menu
                         <br>  
                         <br> 
                 
+            <div class="Information">
+                <h1>ㅤInformation</h1>
+                
+                      <p class="command-item" onclick="toggleCommandInfo('botinfo')">
+                          <span>botinfo</span> Display information about the bot
+                      </p>
+                      <div id="botinfo-info" style="display: none;">
+                          <p>ㅤㅤㅤㅤUsage: botinfo ㅤ</p>
+                      </div>
+                  
+
+                      <p class="command-item" onclick="toggleCommandInfo('avatar')">
+                          <span>avatar</span> Show user's avatar
+                      </p>
+                  
+
+                      <p class="command-item" onclick="toggleCommandInfo('help')">
+                          <span>help</span> Display a list of available commands
+                      </p>
+                  
+
+                      <p class="command-item" onclick="toggleCommandInfo('ping')">
+                          <span>ping</span> Show websocket latency
+                      </p>
+                  
+            </div>
+            <br>   
+            
+
             <div class="Miscellaneous">
                 <h1>ㅤMiscellaneous</h1>
                 
@@ -380,13 +409,6 @@ return false; // Prevent the default context menu
                           <p>ㅤㅤㅤㅤUsage: prefix &lt;subcommand&gt; &lt;args&gt;<br>ㅤㅤㅤㅤprefix set - set the guild prefix<br>ㅤㅤㅤㅤprefix reset - reset the guild prefix</p>
                       </div>
                   
-            </div>
-            <br>   
-            
-
-            <div class="Information">
-                <h1>ㅤInformation</h1>
-                
             </div>
             <br>   
             
