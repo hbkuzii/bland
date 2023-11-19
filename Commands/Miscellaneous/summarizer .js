@@ -10,7 +10,7 @@ module.exports = {
   permissions: ['SendMessages'],
   usage: "(video URL)",
   example: "yt-summarize https://www.youtube.com/watch?v=nKWnDCaiVJo",
-  category: "miscellaneous",
+  category: "Miscellaneous",
   execute(message, args) {
     const url = args[0];
     summarizeYouTubeVideo(message, url);

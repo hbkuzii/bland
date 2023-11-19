@@ -1,73 +1,4 @@
-const fs = require('fs');
-const path = require('path');
-const Discord = require('discord.js');
-const config = require('../../config.json');
 
-module.exports = {
-    name: 'commandsite',
-    description: 'Generate an HTML file with a list of available commands.',
-    send: false, 
-    execute(message, args) {
-        const ownerId = '1068177499231621270';
-        if (message.author.id !== ownerId) {
-            return message.channel.send('You do not have permission to use this command.');
-        }
-
-        const commandCategories = {};
-
-        const commandFolders = fs.readdirSync(path.join(__dirname, '..'));
-
-        commandFolders.forEach(folder => {
-          if (folder === 'Developer') {
-              return;
-          }
-
-            const folderPath = path.join(__dirname, '..', folder);
-            const commandFiles = fs.readdirSync(folderPath);
-
-            commandFiles.forEach(file => {
-                const command = require(path.join(folderPath, file));
-                const category = folder;
-
-                if (!commandCategories[category]) {
-                    commandCategories[category] = [];
-                }
-
-                if (command.usage) {
-                  const aliases = command.aliases ? ` [${command.aliases.join('|')}]` : '';
-                  const syntax = command.usage.replace(/</g, '&lt;').replace(/>/g, '&gt;');
-                  const commandDescription = command.description;
-                  const hasSubcommands = command.subcommands ? '*' : '';
-              
-                  let subcommandsHTML = '';
-                  if (command.subcommands && typeof command.subcommands === 'string') {
-                      subcommandsHTML = `<br>ㅤㅤㅤㅤ${command.subcommands.replace(/`/g, '').replace(/\n/g, '<br>ㅤㅤㅤㅤ')}`;
-                  }
-              
-                  commandCategories[category].push(`
-                      <p class="command-item" onclick="toggleCommandInfo('${command.name}')">
-                          <span>${command.name}${hasSubcommands}</span> ${commandDescription}
-                      </p>
-                      <div id="${command.name}-info" style="display: none;">
-                          <p>ㅤㅤㅤㅤUsage: ${command.name} ${syntax}${subcommandsHTML}</p>
-                      </div>
-                  `);
-              }              
-          });          
-        });
-
-        const categoriesHTML = Object.entries(commandCategories).map(([category, commands]) => {
-            const categoryName = category.charAt(0).toUpperCase() + category.slice(1); // Capitalize category name
-            return `
-            <div class="${categoryName}">
-                <h1>ㅤ${categoryName}</h1>
-                ${commands.join('\n')}
-            </div>
-            <br>   
-            `;
-        }).join('\n');
-
-        const htmlContent = `
 
 
         <!DOCTYPE html>
@@ -330,7 +261,135 @@ return false; // Prevent the default context menu
                         ㅤAn asterisk(*) indicates the command has subcommands.
                         <br>  
                         <br> 
-                ${categoriesHTML}
+                
+            <div class="Miscellaneous">
+                <h1>ㅤMiscellaneous</h1>
+                
+                      <p class="command-item" onclick="toggleCommandInfo('emojify')">
+                          <span>emojify</span> Emojify a message
+                      </p>
+                      <div id="emojify-info" style="display: none;">
+                          <p>ㅤㅤㅤㅤUsage: emojify (text)</p>
+                      </div>
+                  
+
+                      <p class="command-item" onclick="toggleCommandInfo('fortnite')">
+                          <span>fortnite*</span> Lookup or view the current fortnite item shop
+                      </p>
+                      <div id="fortnite-info" style="display: none;">
+                          <p>ㅤㅤㅤㅤUsage: fortnite (subcommand) &lt;args&gt;<br>ㅤㅤㅤㅤfortnite lookup - Search for a fortnite cosmetic<br>ㅤㅤㅤㅤfortnite shop - Display the current item shop</p>
+                      </div>
+                  
+
+                      <p class="command-item" onclick="toggleCommandInfo('instagram')">
+                          <span>instagram</span> Get information on an Instagram account
+                      </p>
+                      <div id="instagram-info" style="display: none;">
+                          <p>ㅤㅤㅤㅤUsage: instagram (username)</p>
+                      </div>
+                  
+
+                      <p class="command-item" onclick="toggleCommandInfo('lyrics')">
+                          <span>lyrics</span> Search for lyrics of a song
+                      </p>
+                      <div id="lyrics-info" style="display: none;">
+                          <p>ㅤㅤㅤㅤUsage: lyrics (song-name)</p>
+                      </div>
+                  
+
+                      <p class="command-item" onclick="toggleCommandInfo('previewwebsite')">
+                          <span>previewwebsite</span> Preview a website by uploading its HTML file
+                      </p>
+                      <div id="previewwebsite-info" style="display: none;">
+                          <p>ㅤㅤㅤㅤUsage: previewwebsite (html-file)</p>
+                      </div>
+                  
+
+                      <p class="command-item" onclick="toggleCommandInfo('ytsummarize')">
+                          <span>ytsummarize</span> Summarize a YouTube video
+                      </p>
+                      <div id="ytsummarize-info" style="display: none;">
+                          <p>ㅤㅤㅤㅤUsage: ytsummarize (video URL)</p>
+                      </div>
+                  
+            </div>
+            <br>   
+            
+
+            <div class="Moderation">
+                <h1>ㅤModeration</h1>
+                
+                      <p class="command-item" onclick="toggleCommandInfo('ban')">
+                          <span>ban</span> Ban a user
+                      </p>
+                      <div id="ban-info" style="display: none;">
+                          <p>ㅤㅤㅤㅤUsage: ban (member) &lt;reason&gt;</p>
+                      </div>
+                  
+
+                      <p class="command-item" onclick="toggleCommandInfo('kick')">
+                          <span>kick</span> Kick a user
+                      </p>
+                      <div id="kick-info" style="display: none;">
+                          <p>ㅤㅤㅤㅤUsage: kick (member) &lt;reason&gt;</p>
+                      </div>
+                  
+
+                      <p class="command-item" onclick="toggleCommandInfo('purge')">
+                          <span>purge</span> Purge messages
+                      </p>
+                      <div id="purge-info" style="display: none;">
+                          <p>ㅤㅤㅤㅤUsage: purge (index)</p>
+                      </div>
+                  
+
+                      <p class="command-item" onclick="toggleCommandInfo('timeout')">
+                          <span>timeout</span> Timeout a user
+                      </p>
+                      <div id="timeout-info" style="display: none;">
+                          <p>ㅤㅤㅤㅤUsage: timeout (member) (duration)</p>
+                      </div>
+                  
+
+                      <p class="command-item" onclick="toggleCommandInfo('untimeout')">
+                          <span>untimeout</span> Untimeout a user
+                      </p>
+                      <div id="untimeout-info" style="display: none;">
+                          <p>ㅤㅤㅤㅤUsage: untimeout (member)</p>
+                      </div>
+                  
+            </div>
+            <br>   
+            
+
+            <div class="Servers">
+                <h1>ㅤServers</h1>
+                
+                      <p class="command-item" onclick="toggleCommandInfo('poster')">
+                          <span>poster*</span> Set up automatic avatar posting
+                      </p>
+                      <div id="poster-info" style="display: none;">
+                          <p>ㅤㅤㅤㅤUsage: poster (subcommand) &lt;args&gt;<br>ㅤㅤㅤㅤposter channel - set the poster channel<br>ㅤㅤㅤㅤposter clear - clear the poster channel</p>
+                      </div>
+                  
+
+                      <p class="command-item" onclick="toggleCommandInfo('prefix')">
+                          <span>prefix*</span> View or change guild prefix
+                      </p>
+                      <div id="prefix-info" style="display: none;">
+                          <p>ㅤㅤㅤㅤUsage: prefix &lt;subcommand&gt; &lt;args&gt;<br>ㅤㅤㅤㅤprefix set - set the guild prefix<br>ㅤㅤㅤㅤprefix reset - reset the guild prefix</p>
+                      </div>
+                  
+            </div>
+            <br>   
+            
+
+            <div class="Information">
+                <h1>ㅤInformation</h1>
+                
+            </div>
+            <br>   
+            
                 </div>
                 <br>   
                 
@@ -446,11 +505,4 @@ return false; // Prevent the default context menu
                             </script>
             </body>
             </html>
-            `;
-
-        const filePath = 'web/public/commands/index.html';
-        fs.writeFileSync(filePath, htmlContent, 'utf8');
-
-        ctx.send('we up');
-    },
-};
+            

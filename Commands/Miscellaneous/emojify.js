@@ -6,7 +6,7 @@ module.exports = {
   permissions: ['SendMessages'],
   usage: "(text)",
   example: "hello world",
-  category: "miscellaneous",
+  category: "Miscellaneous",
   execute(message, args) {
     message.channel.sendTyping();
     const emojifiedMessage = emojifyText(args.join(' '));

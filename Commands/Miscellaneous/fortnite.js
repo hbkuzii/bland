@@ -11,6 +11,7 @@ module.exports = {
   example : 'lookup Wildcat',
   aliases : [ 'fort', 'fn' ],
   subcommands: '\`fortnite lookup\` - Search for a fortnite cosmetic\n\`fortnite shop\` - Display the current item shop',
+  category: "Miscellaneous",
   async execute(message, args) {
     const command = String(args[0]).toLowerCase();
 

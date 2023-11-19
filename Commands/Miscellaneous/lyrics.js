@@ -7,6 +7,7 @@ module.exports = {
     description: 'Search for lyrics of a song',
     usage: '(song-name)',
     permissions: ['SendMessages'],
+    category: "Miscellaneous",
     async execute(message, args) {
         const songName = args.join(' ');
         const Client = new Genius.Client(process.env.GENIUS_ACCESS);

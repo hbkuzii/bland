@@ -8,6 +8,7 @@ module.exports = {
   description: 'Preview a website by uploading its HTML file',
   usage: '(html-file)',
   permissions: ['SendMessages'],
+  category: "Miscellaneous",
   execute(message, args) {
     const attachment = message.attachments.first();
 
