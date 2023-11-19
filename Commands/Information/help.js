@@ -11,12 +11,12 @@ module.exports = {
   description: 'Display a list of available commands',
   permissions: ['SendMessages'],
   execute(message, args) {
-    const commandFiles = fs.readdirSync(path.join(__dirname, '../../commands'));
+    const commandFiles = fs.readdirSync(path.join(__dirname, '../../Commands'));
 
     const categories = {};
 
     for (const folder of commandFiles) {
-      const folderPath = path.join(__dirname, `../../commands/${folder}`);
+      const folderPath = path.join(__dirname, `../../Commands/${folder}`);
       const commands = fs.readdirSync(folderPath).filter(file => file.endsWith('.js'));
 
       for (const commandFile of commands) {

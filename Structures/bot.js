@@ -8,11 +8,11 @@ const chalk = require('chalk');
 const { EmbedBuilder } = require('discord.js');
 const cooldowns = new Discord.Collection();
 module.exports = (client) => {
-  const commandFolders = fs.readdirSync('./commands');
+  const commandFolders = fs.readdirSync('./Commands');
   for (const folder of commandFolders) {
-    const commandFiles = fs.readdirSync(`./commands/${folder}`).filter(file => file.endsWith('.js'));
+    const commandFiles = fs.readdirSync(`./Commands/${folder}`).filter(file => file.endsWith('.js'));
     for (const file of commandFiles) {
-      const command = require(`../commands/${folder}/${file}`);
+      const command = require(`../Commands/${folder}/${file}`);
       client.commands.set(command.name, command);
       if (command.aliases && Array.isArray(command.aliases)) {
         command.aliases.forEach(alias => {

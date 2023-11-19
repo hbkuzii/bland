@@ -8,7 +8,7 @@ module.exports = {
   description: 'Preview a website by uploading its HTML file',
   usage: '(html-file)',
   permissions: ['SendMessages'],
-  async execute(message, args) {
+  execute(message, args) {
     const attachment = message.attachments.first();
 
     if (!attachment.name.endsWith('.html')) {
@@ -16,8 +16,8 @@ module.exports = {
       return;
     }
 
-    const channel = await message.guild.channels.cache.get('1175436883870875738');
-    const msg = await channel.send({ files: [attachment] });
+    const channel = message.guild.channels.cache.get('1175436883870875738');
+    const msg = channel.send({ files: [attachment] });
     const proxy = msg.attachments.first().url;
     const url = `https://mahto.id/chat-exporter?url=${proxy}`;
 

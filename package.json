@@ -7,6 +7,7 @@
     "erela": "^1.11.2",
     "erela.js": "^2.4.0",
     "fs": "^0.0.1-security",
+    "genius-lyrics": "^4.4.6",
     "lowdb": "^6.1.1",
     "mongoose": "^8.0.1",
     "os": "^0.1.2",
