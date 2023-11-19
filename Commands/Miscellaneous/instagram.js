@@ -1,4 +1,4 @@
-const { EmbedBuilder } = require('discord.js');
+const { EmbedBuilder, ContextMenuCommandAssertions } = require('discord.js');
 const axios = require('axios');
 const config = require('../../config.json');
 
@@ -10,7 +10,7 @@ module.exports = {
     example: 'prolificgreens',
     module: 'Miscellaneous',
 
-    async execute(message, args, ctx) {
+    async execute(message, args) {
         try {
             const username = String(args[0]).toLowerCase();
             message.channel.sendTyping();
@@ -53,7 +53,7 @@ module.exports = {
 
             message.reply({ embeds: [embed] });
         } catch (error) {
-            return ctx.warn(message, 'instagram', error);
+            return ctx.error()
         }
     }
 };
