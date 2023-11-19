@@ -42,10 +42,10 @@ module.exports = (client) => {
         message.reply({ embeds: [{ color: config.color, description: `> ${message.author}: ${content}` }] });
       },
       approve: (content) => {
-        message.reply({ embeds: [{ color: config.color, description: `> ${message.author}: ${content}` }] });
+        message.reply({ embeds: [{ color:'#bcfc8d', description: `> ${message.author}: ${content}` }] });
       },
       warn: (content) => {
-        message.reply({ embeds: [{ color: config.color, description: `> ${message.author}: ${content}` }] });
+        message.reply({ embeds: [{ color: '#fcd94c', description: `> ${message.author}: ${content}` }] });
       },
       normal: (content) => {
         message.reply({ embeds: [{ color: config.color, description: `${content}` }] });

@@ -1,4 +1,5 @@
 const { PermissionsBitField, EmbedBuilder } = require('discord.js');
+const config = require('../../config.json');
 
 module.exports = {
   name: 'kick',
@@ -47,7 +48,7 @@ module.exports = {
       .setDescription(`> You've been kicked from ${message.guild.name}`)
       .addFields({ name: `**Moderator**`, value: `${message.author.tag}`, inline: true })
       .addFields({ name: `**Reason**`, value: `${reason}`, inline: true })
-      .setColor("#2f3136")
+      .setColor(color.config)
       .setThumbnail(message.guild.iconURL({ dynamic: true, size: 2048 }))
       .setAuthor({ name: message.guild.name, iconURL: message.guild.iconURL({ dynamic: true, size: 2048 })});  
 

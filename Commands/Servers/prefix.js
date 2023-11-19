@@ -17,26 +17,21 @@ module.exports = {
       if (args[0] === "set") {
   
         if (!args[1]) {
-          message.channel.stopTyping();
           return ctx.warn(`You need to provide a new prefix when using \`prefix set\``);
         }
   
         if (args[1].length > 3) {
-          message.channel.stopTyping();
           return ctx.warn(`Prefix can't be longer than **3 characters**!`);
         }
   
         db.set(`prefix_${message.guild.id}`, args[1]);
-        message.channel.stopTyping();
         return ctx.approve(`The prefix has been modified to \`${args[1]}\``);
       }
   
       if (args[0] === "reset") {
         db.delete(`prefix_${message.guild.id}`);
-        message.channel.stopTyping();
         return ctx.approve(`The prefix has been modified to \`,\``);
       }
-      message.channel.stopTyping();
       return ctx.embed(`Guild prefix \`${currentPrefix}\``);
     }
   };

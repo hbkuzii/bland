@@ -13,6 +13,12 @@ module.exports = {
     message.channel.sendTyping();
     const user = message.mentions.members.first() || message.guild.members.cache.get(args[0]) || message.guild.members.cache.find(r => (r.user.username.toLowerCase() === args.join(' ').toLowerCase() || r.displayName.toLowerCase() === args.join(' ').toLowerCase())) || message.member;
 
+    // Check if user is found
+    if (!user) {
+      ctx.embed("User not found!");
+      return;
+    }
+
     const isAuthor = user.id === message.author.id;
 
     const avatarEmbed = new EmbedBuilder()
@@ -21,6 +27,5 @@ module.exports = {
       .setURL(user.user.displayAvatarURL({ dynamic: true, size: 4096 }))
       .setImage(user.user.displayAvatarURL({ dynamic: true, size: 4096 }));
     message.reply({ embeds: [avatarEmbed] });
-    message.channel.stopTyping();
   },
 };
