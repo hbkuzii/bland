@@ -7,7 +7,7 @@ module.exports = {
     description: 'Get information on an Instagram account',
     parameters: ['username'],
     usage: '(username)',
-    example: 'prolificgreens',
+    example: 'jamescharles',
     module: 'Miscellaneous',
 
     async execute(message, args) {
