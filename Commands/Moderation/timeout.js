@@ -9,6 +9,7 @@ module.exports = {
   example: "curly 10m",
   usage: "(member) (duration)",
   execute(message, args) {
+    message.channel.sendTyping();
     let timeUser = message.mentions.members.first() || message.guild.members.cache.get(args[0]);
 
     if (!timeUser) {

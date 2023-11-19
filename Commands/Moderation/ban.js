@@ -9,6 +9,7 @@ module.exports = {
   example: 'curly reason',
   usage: '(member) <reason>',
   execute(message, args) {
+    message.channel.sendTyping();
     let targetUser = message.mentions.members.first() || message.guild.members.cache.get(args[0]);
 
     if (!targetUser) {

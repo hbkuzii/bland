@@ -9,6 +9,7 @@ module.exports = {
   example: "curly",
   usage: "(member)",
   execute(message, args) {
+    message.channel.sendTyping();
     let untimedUser = message.mentions.members.first() || message.guild.members.cache.get(args[0]);
 
     if (!untimedUser) {
@@ -44,7 +45,7 @@ module.exports = {
     untimedMember.timeout(null, reason)
       .then(() => {
         ctx.approve(`**${untimedUser.user}** has been untimed out.`)
-        message.reply({ embeds: [embed] });
+        message.channel.sendTyping();
       })
       .catch(err => {
       });

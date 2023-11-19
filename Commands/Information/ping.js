@@ -10,6 +10,7 @@ module.exports = {
   send: false,
   category: 'Information',
   execute(message, args) {
+    message.channel.sendTyping();
     const ping = Date.now() - message.createdTimestamp;
     let ping1 = [
       `it took \`${ping}ms\` to ping **your mother**`,

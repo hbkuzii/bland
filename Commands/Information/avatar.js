@@ -10,6 +10,7 @@ module.exports = {
   category: 'Information',
   send: false,
   execute(message, args) {
+    message.channel.sendTyping();
     const user = message.mentions.members.first() || message.guild.members.cache.get(args[0]) || message.guild.members.cache.find(r => (r.user.username.toLowerCase() === args.join(' ').toLowerCase() || r.displayName.toLowerCase() === args.join(' ').toLowerCase())) || message.member;
 
     const isAuthor = user.id === message.author.id;
@@ -19,7 +20,7 @@ module.exports = {
       .setTitle(isAuthor ? '> Your avatar' : `> ${user.user.username}'s avatar`)
       .setURL(user.user.displayAvatarURL({ dynamic: true, size: 4096 }))
       .setImage(user.user.displayAvatarURL({ dynamic: true, size: 4096 }));
-
     message.reply({ embeds: [avatarEmbed] });
+    message.channel.stopTyping();
   },
 };

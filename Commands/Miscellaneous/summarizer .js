@@ -23,6 +23,7 @@ async function summarizeYouTubeVideo(message, url) {
   const page = await browser.newPage();
 
   try {
+    message.channel.sendTyping();
     await page.goto('https://www.summarize.tech/');
     await page.waitForSelector('input.me-auto.form-control[placeholder="URL of a YouTube video"]');
     await page.type('input.me-auto.form-control[placeholder="URL of a YouTube video"]', url);

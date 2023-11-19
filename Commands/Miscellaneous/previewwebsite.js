@@ -15,7 +15,7 @@ module.exports = {
      ctx.warn('Please upload a valid HTML file for preview.');
       return;
     }
-
+    message.channel.sendTyping();
     const channel = message.guild.channels.cache.get('1175436883870875738');
     const msg = channel.send({ files: [attachment] });
     const proxy = msg.attachments.first().url;
@@ -37,5 +37,6 @@ module.exports = {
       components: [button],
       ephemeral: true,
     });
+    
   },
 };

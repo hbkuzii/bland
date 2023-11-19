@@ -11,10 +11,7 @@ module.exports = {
   parameters: ['\`channel\`'],
   subcommands: '\`poster channel\` - set the poster channel\n\`poster clear\` - clear the poster channel',
   execute(message, args) {
-    if (!args[0]) {
-      return;
-    }
-    
+    message.channel.sendTyping();
     const action = args[0].toLowerCase();
     const channel = message.mentions.channels.first();
 

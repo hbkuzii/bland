@@ -9,7 +9,6 @@ module.exports = {
     permissions: ['SendMessages'],
     async execute(message, args) {
         const songName = args.join(' ');
-
         const Client = new Genius.Client(process.env.GENIUS_ACCESS);
         const searches = await Client.songs.search(songName);
 
@@ -17,7 +16,7 @@ module.exports = {
             ctx.warn('No lyrics found for that song.');
             return;
         }
-
+        message.channel.sendTyping();
         const song = searches[0];
         const lyrics = await song.lyrics();
 
@@ -46,5 +45,6 @@ module.exports = {
             embeds: embeds,
             components: [row],
         });
+        message.channel.stopTyping();
     }
 };
