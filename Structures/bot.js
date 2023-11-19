@@ -59,14 +59,13 @@ module.exports = (client) => {
     const args = message.content.slice(prefix.length).trim().split(/ +/);
     const commandName = args.shift().toLowerCase();
   
-    // Check for cooldown for any command attempt
     if (!cooldowns.has(commandName)) {
       cooldowns.set(commandName, new Map());
     }
   
     const now = Date.now();
     const timestamps = cooldowns.get(commandName);
-    const cooldownAmount = 2500; // 2.5 seconds in milliseconds
+    const cooldownAmount = 2500;
   
     if (timestamps.has(message.author.id)) {
       const expirationTime = timestamps.get(message.author.id) + cooldownAmount;
