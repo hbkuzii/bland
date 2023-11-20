@@ -10,12 +10,12 @@ module.exports = {
     example: 'jamescharles',
     module: 'Miscellaneous',
 
-    async execute(message, args) {
+    execute(message, args) {
         try {
             const username = String(args[0]).toLowerCase();
             message.channel.sendTyping();
 
-            const user = await getProfile(username);
+            const user = getProfile(username);
 
             const embed = new EmbedBuilder({
                 author: {

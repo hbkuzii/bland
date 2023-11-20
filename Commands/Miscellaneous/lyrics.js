@@ -8,10 +8,10 @@ module.exports = {
     usage: '(song-name)',
     permissions: ['SendMessages'],
     category: "Miscellaneous",
-    async execute(message, args) {
+    execute(message, args) {
         const songName = args.join(' ');
         const Client = new Genius.Client(process.env.GENIUS_ACCESS);
-        const searches = await Client.songs.search(songName);
+        const searches = Client.songs.search(songName);
 
         if (!searches[0]) {
             ctx.warn('No lyrics found for that song.');
@@ -19,9 +19,9 @@ module.exports = {
         }
         message.channel.sendTyping();
         const song = searches[0];
-        const lyrics = await song.lyrics();
+        const lyrics = song.lyrics();
 
-        const embeds = await Promise.all(lyrics.match(/[\s\S]{1,2048}/g).map((x) => {
+        const embeds = Promise.all(lyrics.match(/[\s\S]{1,2048}/g).map((x) => {
             return new EmbedBuilder()
                 .setAuthor({
                     name: message.member.displayName,

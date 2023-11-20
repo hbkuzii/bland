@@ -10,7 +10,7 @@ module.exports = {
     aliases : [ 'tr' ],
     category : 'Miscellaneous',
 
-    async execute (message, args) {
+    execute(message, args) {
         message.channel.sendTyping()
         try {
             if (!args[0]) {
@@ -27,7 +27,7 @@ module.exports = {
                 language = args[0].toLowerCase(), text = args.slice(1).join(' ')
             }
 
-            const translation = await translate(text, { to : language })
+            const translation = translate(text, { to : language })
 
             console.log(translation)
 

@@ -12,13 +12,13 @@ module.exports = {
      example : 'MrBeast',
      aliases : [ 'tt' ],
 
-    async execute (message, args) {
+     execute(message, args) {
         let username = String(args[0]).toLowerCase()
 
             try {
                 message.channel.sendTyping()
                 
-                const results = await fetch(`https://www.tikwm.com/api/user/info?unique_id=${username}`, {
+                const results = fetch(`https://www.tikwm.com/api/user/info?unique_id=${username}`, {
                     method : 'POST'
                 }).then((response) => response.json())
                 

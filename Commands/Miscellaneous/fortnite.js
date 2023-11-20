@@ -12,7 +12,7 @@ module.exports = {
   aliases : [ 'fort', 'fn' ],
   subcommands: '\`fortnite lookup\` - Search for a fortnite cosmetic\n\`fortnite shop\` - Display the current item shop',
   category: "Miscellaneous",
-  async execute(message, args) {
+  execute(message, args) {
     const command = String(args[0]).toLowerCase();
 
     if (!args[0] || !commands.includes(command)) {
@@ -26,7 +26,7 @@ module.exports = {
                     return this.bot.help(message, this.commands[0]);
                 }
                 message.channel.sendTyping();
-                const results = await fetch(
+                const results = fetch(
                     `https://fortnite-api.com/v2/cosmetics/br/search?matchMethod=contains&name=${encodeURIComponent(
                         args.slice(1).join(' ')
                     )}`,
@@ -57,7 +57,7 @@ module.exports = {
                         .slice(0, 5)
                         .map((date) => new Date(date).getTime());
 
-                    await Promise.all(
+                    Promise.all(
                         dates.map((date) => {
                             date = Math.floor(date / 1000);
 
@@ -66,7 +66,7 @@ module.exports = {
                     );
                 }
 
-                const results2 = await fetch(
+                const results2 = fetch(
                     `https://fnbr.co/api/images?search=${encodeURI(
                         name
                     )}&limit=${encodeURI(1)}&type=${encodeURI(type.value)}`,
