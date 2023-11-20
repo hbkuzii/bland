@@ -304,11 +304,6 @@ return false; // Prevent the default context menu
     }
 </style>
                           </style>
-                          <div id="discord-icon-bar">
-                          <a href="https://discord.gg/bland" target="_blank" rel="noopener noreferrer" class="discord-icon">
-                              <i class="fab fa-discord"></i>
-                          </a>
-                      </div>
                       
                           <div class="header">
                             <div class="category-buttons">

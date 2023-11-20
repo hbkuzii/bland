@@ -227,11 +227,6 @@ return false; // Prevent the default context menu
     }
 </style>
                           </style>
-                          <div id="discord-icon-bar">
-                          <a href="https://discord.gg/bland" target="_blank" rel="noopener noreferrer" class="discord-icon">
-                              <i class="fab fa-discord"></i>
-                          </a>
-                      </div>
                       
                           <div class="header">
                             <div class="category-buttons">
@@ -336,6 +331,22 @@ return false; // Prevent the default context menu
                       </p>
                       <div id="ytsummarize-info" style="display: none;">
                           <p>ㅤㅤㅤㅤUsage: ytsummarize (video URL)</p>
+                      </div>
+                  
+
+                      <p class="command-item" onclick="toggleCommandInfo('tiktok')">
+                          <span>tiktok</span> Get information on a TikTok profile
+                      </p>
+                      <div id="tiktok-info" style="display: none;">
+                          <p>ㅤㅤㅤㅤUsage: tiktok (username)</p>
+                      </div>
+                  
+
+                      <p class="command-item" onclick="toggleCommandInfo('translate')">
+                          <span>translate</span> Translate text to another language
+                      </p>
+                      <div id="translate-info" style="display: none;">
+                          <p>ㅤㅤㅤㅤUsage: translate &lt;language&gt; (text)</p>
                       </div>
                   
             </div>

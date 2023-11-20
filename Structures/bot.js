@@ -109,15 +109,16 @@ if (command.permissions) {
         if (args.length === 0) {
           if (message.attachments.size === 0) {
             const embed = new EmbedBuilder()
-              .setTitle(`Command: ${command.name} (${aliases})`)
-              .setAuthor({ name: `${module}`, iconURL: client.user.displayAvatarURL({ dynamic: true })})
-              .setDescription(`${command.description}`)
-              .addFields(
-                { name: 'usage', value: `>>> \`\`\`bf\nSyntax ,${command.name} ${usage}\`\`\``, inline: true})
-                .setFooter({ text: `Module: ${module}`, iconURL: message.author.displayAvatarURL({ dynamic: true }) })
-
-              .setTimestamp()
-              .setColor(config.color);
+            .setTitle(`Command: ${command.name} (${aliases})`)
+            .setAuthor({ name: `${module}`, iconURL: client.user.displayAvatarURL({ dynamic: true })})
+            .setDescription(`${command.description}`)
+            .setFooter({ text: `Module: ${module}`, iconURL: message.author.displayAvatarURL({ dynamic: true }) })
+            .addFields(
+              { name: 'usage', value: `>>> \`\`\`bf\nSyntax ,${command.name} ${usage}\`\`\``}
+            )
+            .setFooter({ text: `Module: ${module}`, iconURL: message.author.displayAvatarURL({ dynamic: true }) })
+            .setTimestamp()
+            .setColor(config.color);          
         
             if (command.subcommands && command.subcommands.length > 0) {
               embed.addFields({ name: 'Subcommands', value: `>>> ${command.subcommands.replace(/`/g, '')}`});
