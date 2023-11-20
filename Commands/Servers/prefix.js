@@ -20,8 +20,8 @@ module.exports = {
           return ctx.warn(`You need to provide a new prefix when using \`prefix set\``);
         }
   
-        if (args[1].length > 3) {
-          return ctx.warn(`Prefix can't be longer than **3 characters**!`);
+        if (args[1].length > 10) {
+          return ctx.warn(`Prefix can't be longer than **10 characters**!`);
         }
   
         db.set(`prefix_${message.guild.id}`, args[1]);
@@ -32,6 +32,6 @@ module.exports = {
         db.delete(`prefix_${message.guild.id}`);
         return ctx.approve(`The prefix has been modified to \`,\``);
       }
-      return ctx.normal(`Guild prefix \`${currentPrefix}\``);
+      return ctx.normal(`prefix \`${currentPrefix}\``);
     }
   };

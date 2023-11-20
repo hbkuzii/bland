@@ -1,27 +1,30 @@
-const { ActionRowBuilder, ButtonBuilder, ButtonStyle, EmbedBuilder } = require('discord.js');
-const config = require('../../config.json');
-const { ContextMenuCommandAssertions } = require('discord.js');
+const { MessageActionRow, MessageButton, ButtonBuilder, ActionRowBuilder, ButtonStyle } = require('discord.js');
 const Genius = require("genius-lyrics");
-module.exports = {
+const { EmbedBuilder } = require('discord.js');
+const config = require('../../config.json');
+
+module.exports =  {
     name: 'lyrics',
     description: 'Search for lyrics of a song',
-    usage: '(song-name)',
+    usage: '<song>',
     permissions: ['SendMessages'],
-    category: "Miscellaneous",
-    execute(message, args) {
+
+    async execute(message, args) {
+        message.channel.sendTyping();
         const songName = args.join(' ');
+
         const Client = new Genius.Client(process.env.GENIUS_ACCESS);
-        const searches = Client.songs.search(songName);
+        const searches = await Client.songs.search(songName);
 
         if (!searches[0]) {
-            ctx.warn('No lyrics found for that song.');
+            message.channel.send('No lyrics found for that song.');
             return;
         }
-        message.channel.sendTyping();
-        const song = searches[0];
-        const lyrics = song.lyrics();
 
-        const embeds = Promise.all(lyrics.match(/[\s\S]{1,2048}/g).map((x) => {
+        const song = searches[0];
+        const lyrics = await song.lyrics();
+
+        const embeds = await Promise.all(lyrics.match(/[\s\S]{1,2048}/g).map((x) => {
             return new EmbedBuilder()
                 .setAuthor({
                     name: message.member.displayName,
@@ -46,6 +49,6 @@ module.exports = {
             embeds: embeds,
             components: [row],
         });
-        message.channel.stopTyping();
+        
     }
 };
