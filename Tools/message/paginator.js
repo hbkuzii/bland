@@ -1,4 +1,5 @@
 const Discord = require('discord.js')
+const config = require('../../config.json')
 
 const proper = (c, i) => {
     if (!c.text) {
@@ -28,11 +29,11 @@ module.exports = class Paginator {
     async paginate () {
         const ActionRow = new Discord.ActionRowBuilder().addComponents(
             new Discord.ButtonBuilder({
-                emoji : '<:right:1142505170786340944>',
+                emoji : '<:left:1142505171377729597>',
                 customId : 'Previous'
             }).setStyle('Primary'),
             new Discord.ButtonBuilder({
-                emoji : '<:left:1142505171377729597>',
+                emoji : '<:right:1142505170786340944>',
                 customId : 'Next'
             }).setStyle('Primary'),
             new Discord.ButtonBuilder({
@@ -50,7 +51,7 @@ module.exports = class Paginator {
             iconURL : this.iconURL ? this.iconURL : null
         })
 
-        const message = await this.message.channel.send({
+        const message = await this.message.reply({
             embeds : [
                 this.embeds[0]
             ],

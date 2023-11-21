@@ -1,26 +1,26 @@
-const { MessageActionRow, MessageButton, ButtonBuilder, ActionRowBuilder, ButtonStyle } = require('discord.js');
+const { MessageActionRow, MessageButton } = require('discord.js');
 const Genius = require("genius-lyrics");
 const { EmbedBuilder } = require('discord.js');
 const config = require('../../config.json');
+const { charToHex } = require('discord-emojis-parser');
 
-module.exports =  {
-    name: 'lyrics',
-    description: 'Search for lyrics of a song',
-    usage: '<song>',
-    permissions: ['SendMessages'],
+module.exports ={
+            name: 'lyrics',
+            description: 'Search for lyrics of a song',
+            usage: '<song>',
+            permissions: ['SendMessages'],
 
     async execute(message, args) {
-        message.channel.sendTyping();
         const songName = args.join(' ');
 
         const Client = new Genius.Client(process.env.GENIUS_ACCESS);
         const searches = await Client.songs.search(songName);
 
         if (!searches[0]) {
-            message.channel.send('No lyrics found for that song.');
+            ctx.warn('No lyrics found for that song.');
             return;
         }
-
+        message.channel.sendTyping()
         const song = searches[0];
         const lyrics = await song.lyrics();
 
@@ -37,18 +37,13 @@ module.exports =  {
                 .setColor(config.color);
         }));
 
-        const row = new ActionRowBuilder()
-            .addComponents(
-                new ButtonBuilder()
-                    .setLabel('Genius')
-                    .setStyle(ButtonStyle.Link)
-                    .setURL(song.url)
-            );
 
-        message.reply({
-            embeds: embeds,
-            components: [row],
-        });
-        
+            await new paginatorInstance(
+                message, {
+                    embeds : embeds,
+                    iconURL : 'https://images.genius.com/2aa2941e1d8ed0034c2ddc9dd5012af9.1000x1000x1.png',
+                    text: `Genius ∙ Page {page} of {pages}`
+                }
+            ).construct()
+        } 
     }
-};

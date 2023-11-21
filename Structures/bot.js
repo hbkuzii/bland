@@ -6,6 +6,7 @@ const config = require('../config.json')
 const { default_prefix } = require('../config.json')
 const chalk = require('chalk');
 const { EmbedBuilder } = require('discord.js');
+const Paginator = require('../Tools/message/paginator.js')
 const cooldowns = new Discord.Collection();
 module.exports = (client) => {
   const commandFolders = fs.readdirSync('./Commands');
@@ -29,6 +30,7 @@ module.exports = (client) => {
     chalk.white.bold(' Starting bland...')
   );
   global.db = require('quick.db');
+  global.paginatorInstance = Paginator;
   
   
   client.on('messageCreate', message => {
