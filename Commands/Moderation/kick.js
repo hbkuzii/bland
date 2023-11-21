@@ -48,7 +48,7 @@ module.exports = {
       .setDescription(`> You've been kicked from ${message.guild.name}`)
       .addFields({ name: `**Moderator**`, value: `${message.author.tag}`, inline: true })
       .addFields({ name: `**Reason**`, value: `${reason}`, inline: true })
-      .setColor(color.config)
+      .setColor(config.color)
       .setThumbnail(message.guild.iconURL({ dynamic: true, size: 2048 }))
       .setAuthor({ name: message.guild.name, iconURL: message.guild.iconURL({ dynamic: true, size: 2048 })});  
 
