@@ -3,7 +3,7 @@ const config = require('../../config.json');
 
 module.exports = {
   name: 'kick',
-  aliases: ["boot", "k"],
+  aliases: ["boot", "k", "yeet"],
   description: 'Kick a user',
   permissions: ['KickMembers'],
   category: "Moderation",

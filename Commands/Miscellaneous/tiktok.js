@@ -11,8 +11,8 @@ module.exports = {
         name: 'tiktok',
             description : 'Get information on a TikTok profile',
             parameters : [ 'username' ],
-            syntax : '(username)',
-            example : '@MrBeast',
+            usage : '(username)',
+            example : 'MrBeast',
             aliases : [ 'tt' ],
     async execute (message, args) {
         let username = String(args[0]).toLowerCase()
