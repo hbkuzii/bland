@@ -4,6 +4,7 @@ const{ PermissionsBitField } = require('discord.js');
 const Discord = require('discord.js');
 const config = require('../config.json')
 const { default_prefix } = require('../config.json')
+const client1 = require('../bland.js')
 const chalk = require('chalk');
 const { EmbedBuilder } = require('discord.js');
 const Paginator = require('../Tools/message/paginator.js')

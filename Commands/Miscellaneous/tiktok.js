@@ -1,30 +1,31 @@
+const { charToHex } = require('discord-emojis-parser')
 const { fetch } = require('undici')
 const config = require('../../config.json');
+const { EmbedBuilder } = require('discord.js');
+
 const commands = [
     'download', 'dl', 'videos', 'vids'
 ]
-const { EmbedBuilder } = require('discord.js');
-module.exports = {
-    name: 'tiktok',
-    description : 'Get information on a TikTok profile',
-     parameters : [ 'username' ],
-     usage : '(username)',
-     example : 'MrBeast',
-     aliases : [ 'tt' ],
 
-     execute(message, args) {
+module.exports = {
+        name: 'tiktok',
+            description : 'Get information on a TikTok profile',
+            parameters : [ 'username' ],
+            syntax : '(username)',
+            example : '@MrBeast',
+            aliases : [ 'tt' ],
+    async execute (message, args) {
         let username = String(args[0]).toLowerCase()
 
             try {
                 message.channel.sendTyping()
                 
-                const results = fetch(`https://www.tikwm.com/api/user/info?unique_id=${username}`, {
+                const results = await fetch(`https://www.tikwm.com/api/user/info?unique_id=${username}`, {
                     method : 'POST'
                 }).then((response) => response.json())
                 
                 if (!results.data) {
-                    return ctx.warn(`Profile [**${username}**](https://www.tiktok.com/@${username}) doesn't exist`
-                    )
+                    return ctx.warn(`Profile [**${username}**](https://www.tiktok.com/@${username}) doesn't exist`)
                 }
                 
                 const { user, stats } = results.data
