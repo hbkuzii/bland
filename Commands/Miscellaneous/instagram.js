@@ -4,6 +4,7 @@ const config = require('../../config.json');
 
 module.exports = {
     name: 'instagram',
+    aliases : [ 'ig'],
     description: 'Get information on an Instagram account',
     parameters: ['username'],
     usage: '(username)',
