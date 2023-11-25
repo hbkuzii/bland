@@ -88,71 +88,28 @@ const randompfp = async () => {
 setInterval(() => {
   randompfp();
 }, 20 * 1000);
-const { promisify } = require('util');
-const exec = promisify(require('child_process').exec);
-const ffmpeg = require('fluent-ffmpeg');
 
-let originalFilePath; // Declare the variable outside the block
-const FormData = require('form-data');
+client.on("userUpdate", (oldUser, newUser) => {
+  const guilds = client.guilds.cache;
 
-client.on('messageCreate', async (message) => {
-  if (message.author.bot) return;
+  if (oldUser.username !== newUser.username) {
+    guilds.forEach((guild) => {
+      const channelId = client.db.get(`discrimchannel_${guild.id}`);
+      const channel = guild.channels.cache.get(channelId);
 
-  if (message.attachments.size > 0) {
-    const attachment = message.attachments.first();
+      if (channel) {
+        let message;
 
-    // Check if the file ends with ".ogg"
-    if (attachment.name.endsWith('.ogg')) {
-      try {
-        // Set the value of originalFilePath
-        const originalFilePath = path.join(__dirname, attachment.name);
-        console.log('File path:', originalFilePath);
-        const originalAudioData = await axios.get(attachment.url, { responseType: 'arraybuffer' });
-
-        if (!originalAudioData.data || !originalAudioData.data.length) {
-          console.error('Error: Empty or invalid audio data');
-          return;
+        if (oldUser.discriminator === "0") {
+          message = `**${oldUser.username}** has been **dropped**.`;
+        } else {
+          message = `**${oldUser.username}#${oldUser.discriminator}** is now **available**.`;
         }
 
-        fs.writeFile(originalFilePath, Buffer.from(originalAudioData.data), async (err) => {
-          if (err) {
-            console.error('Error writing original audio file:', err);
-          } else {
-            // Convert .ogg to .mp3 using ffmpeg
-            const convertedFilePath = path.join(__dirname, 'converted.mp3');
-            await new Promise((resolve, reject) => {
-              ffmpeg()
-                .input(originalFilePath)
-                .audioCodec('libmp3lame')
-                .toFormat('mp3')
-                .on('end', resolve)
-                .on('error', reject)
-                .save(convertedFilePath);
-            });
-
-            // Use axios to send a POST request to OpenAI for transcription
-            const formData = new FormData();
-            formData.append('model', 'whisper-1');
-            formData.append('file', fs.createReadStream(convertedFilePath));
-
-            const openaiResponse = await axios.post('https://api.openai.com/v1/audio/transcriptions', formData, {
-              headers: {
-                'Content-Type': `multipart/form-data; boundary=${formData._boundary}`,
-                'Authorization': `Bearer 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`, // Replace with your actual OpenAI API key
-              },
-            });
-
-            const transcript = openaiResponse.data.transcription;
-
-            // Do something with the transcript (e.g., send it back to Discord)
-            console.log('Transcript:', transcript);
-            message.reply(`Transcript: ${transcript}`);
-          }
-        });
-      } catch (error) {
-        console.error('Error processing audio file:', error);
+        channel.send(message);
       }
-    }
+    });
   }
 });
+
 client.login(token);

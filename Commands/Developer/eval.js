@@ -7,6 +7,7 @@ module.exports = {
     description: 'Evaluate JavaScript or Python code',
     ownerOnly: true,
     send: false,
+    category: "Developer",
     async execute(message, args) {
         // Check if the user executing the command is the owner
         if (message.author.id === '1068177499231621270') {

@@ -9,8 +9,7 @@ module.exports = {
         usage : '(query)',
         example : 'Amiri',
         aliases : [ 'urbandictionary', 'ud' ],
-        module : 'Miscellaneous',
-
+        category : 'Miscellaneous',
     async execute (message, args) {
         try {
 

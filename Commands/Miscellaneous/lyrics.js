@@ -5,11 +5,11 @@ const config = require('../../config.json');
 const { charToHex } = require('discord-emojis-parser');
 
 module.exports ={
-            name: 'lyrics',
-            description: 'Search for lyrics of a song',
-            usage: '<song>',
-            permissions: ['SendMessages'],
-
+    name: 'lyrics',
+    description: 'Search for lyrics of a song',
+    usage: '<song>',
+    permissions: ['SendMessages'],
+    category: "Miscellaneous",
     async execute(message, args) {
         const songName = args.join(' ');
 

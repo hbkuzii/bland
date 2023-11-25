@@ -9,6 +9,7 @@ module.exports = {
   description: 'Display information about the bot',
   permissions: ['SendMessages'],
   send: false,
+  category: 'Information',
   execute(message) {
     const cpus = os.cpus();
     const cpu = cpus[0];

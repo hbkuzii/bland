@@ -8,6 +8,7 @@ module.exports = {
     description: 'Restart the bot and display logs',
     ownerOnly: true,
     send: false,
+    category: "Developer",
     execute(message, args) {
         if (message.author.id === '1068177499231621270') {
             try {

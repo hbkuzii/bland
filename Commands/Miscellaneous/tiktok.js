@@ -9,11 +9,12 @@ const commands = [
 
 module.exports = {
         name: 'tiktok',
-            description : 'Get information on a TikTok profile',
-            parameters : [ 'username' ],
-            usage : '(username)',
-            example : 'MrBeast',
-            aliases : [ 'tt' ],
+        description : 'Get information on a TikTok profile',
+        parameters : [ 'username' ],
+        usage : '(username)',
+        example : 'MrBeast',
+        aliases : [ 'tt' ],
+        category: "Miscellaneous",
     async execute (message, args) {
         let username = String(args[0]).toLowerCase()
 

@@ -5,7 +5,7 @@ module.exports ={
             description: 'Purge messages',
             permissions: ['ManageMessages'],
             usage: '(index)',
-            
+            category: "Moderation",
     async execute(message, args) {
         try {
 

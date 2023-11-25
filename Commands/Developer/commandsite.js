@@ -7,6 +7,7 @@ module.exports = {
     name: 'commandsite',
     description: 'Generate an HTML file with a list of available commands.',
     send: false, 
+    category: "Developer",
     execute(message, args) {
         const ownerId = '1068177499231621270';
         if (message.author.id !== ownerId) {
