@@ -52,26 +52,22 @@ module.exports = {
       .setThumbnail(message.guild.iconURL({ dynamic: true, size: 2048 }))
       .setAuthor({ name: message.guild.name, iconURL: message.guild.iconURL({ dynamic: true, size: 2048 })});  
 
-    targetUser.send({ embeds: [embed] })
+    targetMember.kick(reason)
       .then(() => {
-        targetMember.kick(reason)
-          .then(() => {
-            ctx.approve(`**${targetUser.user.tag}** has been kicked. Reason: ${reason}`);
-          })
-          .catch(err => {
-            console.error(err);
-            if (err.code === 50013) {
-              return ctx.warn(`I do not have the necessary permissions to **${targetMember.user.tag}**.`);
-            } else if (err.code === 50051) {
-              return ctx.warn(`I cannot kick ${targetMember.user.tag} due to role hierarchy.`);
-            } else {
-              ctx.warn(`An error occurred while trying to kick the user.`);
-            }
-          });
+        ctx.approve(`**${targetUser.user.tag}** has been kicked. Reason: ${reason}`);
       })
       .catch(err => {
-        console.error(`Failed to send DM: ${err}`);
-        ctx.warn(`An error occurred while trying to send a DM to the user.`);
+        console.error(err);
+        if (err.code === 50013) {
+          return ctx.warn(`I do not have the necessary permissions to **${targetMember.user.tag}**.`);
+        } else if (err.code === 50051) {
+          return ctx.warn(`I cannot kick ${targetMember.user.tag} due to role hierarchy.`);
+        } else {
+          ctx.warn(`An error occurred while trying to kick the user.`);
+        }
+      })
+      .finally(() => {
+       ctx.approve(`**${targetUser.user.tag}** has been kicked. Reason: ${reason}`);
       });
   },
 };

@@ -9,7 +9,7 @@ module.exports = {
   send: false,
   category: "Developer",
   execute(message, args) {
-    const prefix = db.get(`prefix_${message.guild.id}`) || default_prefix;
+    const prefix = db.get(`prefix_${message.guild.id}`) || config.default_prefix;
     const commandFiles = fs.readdirSync(path.join(__dirname, '../../Commands'));
 
     const categories = {};
@@ -43,7 +43,7 @@ module.exports = {
 
     const embed = new EmbedBuilder()
       .setColor(config.color)
-      .setDescription(`premium bot to avail your community.\n> \`()\` - Required Argument\n> \`<>\` - Optional Argument\nUse \`${prefix}help [command]\` for more information on a command.`)
+      .setDescription(`premium bot to avail your community.\n**@mention** me or use \`${prefix}(command)\` to get started.\n> \`()\` - Required Argument\n> \`<>\` - Optional Argument\nUse \`${prefix}help (command)\` for more information on a command.`)
       .setTimestamp()
 
     for (const [category, commands] of Object.entries(categories)) {

@@ -30,7 +30,7 @@ module.exports = {
 
             console.log(translation)
 
-            message.reply(`${translation.text}`)
+            ctx.send(`${translation.text}`)
         } catch (error) {
             return ctx.error()
         }

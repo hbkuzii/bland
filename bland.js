@@ -111,5 +111,10 @@ client.on("userUpdate", (oldUser, newUser) => {
     });
   }
 });
-
+client.on('guildMemberAdd', (member) => {
+  const isAntibotEnabled = db.get(`antibot_${member.guild.id}`);
+  if (isAntibotEnabled && member.user.bot) {
+    member.kick("Antibot feature is enabled.");
+  }
+});
 client.login(token);
