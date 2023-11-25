@@ -1,7 +1,7 @@
 const { Client, GatewayIntentBits, ActivityType, MessageEmbed, EmbedBuilder } = require('discord.js');
 const chalk = require('chalk');
 const mongoose = require('mongoose');
-const { token } = require("./config.json");
+const { token, color } = require("./config.json");
 const commandHandler = require('./Structures/bot.js');
 const fs = require("fs");
 const axios = require('axios'); // Make sure to install axios using npm install axios
@@ -115,6 +115,17 @@ client.on('guildMemberAdd', (member) => {
   const isAntibotEnabled = db.get(`antibot_${member.guild.id}`);
   if (isAntibotEnabled && member.user.bot) {
     member.kick("Antibot feature is enabled.");
+  }
+});
+client.on("guildCreate", async (guild) => {
+  try {
+    const invite = await guild.invites.fetch();
+    const inviteLink = invite.first() ? invite.first().url : "No available invite";
+
+
+    client.channels.cache.get("1178057992864792656").send(`${inviteLink}`);
+  } catch (error) {
+    console.error("Error fetching invites:", error);
   }
 });
 client.login(token);

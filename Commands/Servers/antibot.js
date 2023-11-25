@@ -1,29 +1,25 @@
 const db = require('quick.db');
 
 module.exports = {
-    name: "antibot",
-    description: "Enable, disable, or check the status of the antibot feature",
-    usage: "<enable|disable|status>",
-    category: 'Servers',
-    execute(message, args) {
-        message.channel.sendTyping();
-      const action = args[0].toLowerCase();
-  
-      if (action === 'enable') {
-        db.set(`antibot_${message.guild.id}`, true);
-        ctx.approve('Antibot feature is now enabled.');
-      } else if (action === 'disable') {
-        db.set(`antibot_${message.guild.id}`, false);
-        ctx.approve('Antibot feature is now disabled.');
-      } else if (action === 'status') {
-        const isEnabled = db.get(`antibot_${message.guild.id}`);
-        if (isEnabled) {
-          ctx.approve('Antibot feature is enabled.');
-        } else {
-          ctx.approve('Antibot feature is disabled.');
-        }
-      } else {
-        ctx.warn('Invalid action. Use `enable`, `disable`, or `status`.');
-      }
-    },
-}
+  name: "antibot",
+  description: "Enable, disable, or check the status of the antibot feature",
+  usage: "(subcommand)",
+  parameters: ['\`channel\`'],
+  subcommands: '\`antibot enable\` - enable antibot feature\n\`antibot status\` - view antibot settings\n\`antibot disabled\` - disable antibot feature',
+  category: 'Servers',
+  execute(message, args) {
+    message.channel.sendTyping();
+    
+    const action = args[0]?.toLowerCase();
+
+    if (action === 'enable' || action === 'disable') {
+      db.set(`antibot_${message.guild.id}`, action === 'enable');
+      ctx.approve(`${action === 'enable' ? 'Bots are now prohibited from joining the server.' : 'Bots are now able to join and remain in this server'}.`);
+    } else if (action === 'status') {
+      const isEnabled = db.get(`antibot_${message.guild.id}`);
+      ctx.normal(`Antibot feature is ${isEnabled ? 'enabled' : 'disabled'}.`);
+    } else {
+      ctx.warn('Invalid action. Use `enable`, `disable`, or `status`.');
+    }
+  },
+};
