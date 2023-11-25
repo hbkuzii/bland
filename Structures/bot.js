@@ -42,13 +42,13 @@ module.exports = (client) => {
         message.reply(`${content}`);
       },
       embed: (content) => {
-        message.reply({ embeds: [{ color: config.color, description: `> ${message.author}: ${content}` }] });
+        message.reply({ embeds: [{ color: config.color, description: `> ${content}` }] });
       },
       approve: (content) => {
-        message.reply({ embeds: [{ color: 0xbcfc8d, description: `> ${message.author}: ${content}` }] });
+        message.reply({ embeds: [{ color: 7632269, description: `> ${content}` }] });
       },
       warn: (content) => {
-        message.reply({ embeds: [{ color: 0xfcd94c, description: `> ${message.author}: ${content}` }] });
+        message.reply({ embeds: [{ color: 7632269, description: `> ${content}` }] });
       },
       normal: (content) => {
         message.reply({ embeds: [{ color: config.color, description: `${content}` }] });

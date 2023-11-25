@@ -42,22 +42,24 @@ module.exports = {
     const rawDuration = args[1];
     const duration = parseDuration(rawDuration);
 
-    if (!duration || isNaN(duration)) {
-      return ctx.warn('Please provide a valid duration for the timeout. (\`s\`/\`m\`/\`h\`/\`d\`)');
+    if (duration === null || isNaN(duration) || duration <= 0) {
+        return ctx.warn('Invalid positive duration for the timeout. (`s`/`m`/`h`/`d`)');
     }
 
     const reason = args.slice(2).join(' ') || 'No reason given';
 
     timeMember.timeout(duration, reason)
-      .then(() => {
-        ctx.approve(`**${timeUser.user}** has been timed out for ${formatDuration(duration)}`)
-      })
-      .catch(err => {
-      });
-  },
+        .then(() => {
+            ctx.approve(`**${timeUser.user}** has been timed out for ${formatDuration(duration)}`)
+        })
+        .catch(err => {
+        });
+},
 };
 
 function parseDuration(rawDuration) {
+  if (!rawDuration) return null;
+
   const parsed = rawDuration.match(/^(\d+)(s|m|h|d)?$/);
   if (!parsed) return null;
 
@@ -79,6 +81,7 @@ function parseDuration(rawDuration) {
       return null;
   }
 }
+
 
 function formatDuration(duration) {
   const seconds = Math.floor((duration / 1000) % 60);
