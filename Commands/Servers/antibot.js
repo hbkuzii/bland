@@ -7,6 +7,7 @@ module.exports = {
   parameters: ['\`channel\`'],
   subcommands: '\`antibot enable\` - enable antibot feature\n\`antibot status\` - view antibot settings\n\`antibot disabled\` - disable antibot feature',
   category: 'Servers',
+  permissions: ["ManageGuild"],
   execute(message, args) {
     message.channel.sendTyping();
     

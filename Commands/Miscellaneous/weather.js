@@ -6,22 +6,22 @@ module.exports = {
     name: 'weather',
     description: 'Get the current weather for a location',
     category: 'Miscellaneous',
+    usage : '(city)',
+    example : 'Toronto',
+    category : 'Miscellaneous',
     async execute(message, args) {
-        try {
-            if (!args.length) {
-                return message.channel.send('Please provide a location for the weather.');
-            }
 
+        try {
             const location = args.join(' ');
 
             weather.find({ search: location, degreeType: 'C' }, function (err, result) {
                 if (err) {
                     console.error(err);
-                    return message.channel.send('An error occurred while fetching the weather information.');
+                    return ctx.warn('An error occurred while fetching the weather information.');
                 }
 
                 if (!result || result.length === 0) {
-                    return message.channel.send('No weather information found for the provided location.');
+                    return ctx.warn('No weather information found for the provided location.');
                 }
 
                 const current = result[0].current;
@@ -59,7 +59,7 @@ console.log(current)
             });
         } catch (error) {
             console.error(error);
-            message.channel.send('An error occurred while fetching the weather information.');
+            ctx.error();
         }
     },
 };

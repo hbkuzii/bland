@@ -5,7 +5,7 @@ module.exports = {
     description: "View or change guild prefix",
     usage: "<subcommand> <args>",
     example: "set ;",
-    permissions: ['MANAGE_GUILD'],
+    permissions: ["ManageGuild"],
     send: false,
     parameters: ['\`prefix\`'],
     subcommands: '\`prefix set\` - set the guild prefix\n\`prefix reset\` - reset the guild prefix',
