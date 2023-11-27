@@ -8,7 +8,7 @@ module.exports = {
     category: 'Miscellaneous',
     permissions: ['SendMessages'],
     send: false,
-    async execute(message, args) {
+    async execute(message, args, client) {
         try {
             const emojis = message.guild.emojis.cache;
 

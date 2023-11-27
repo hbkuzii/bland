@@ -24,7 +24,7 @@ module.exports = {
         aliases : [ 'clear', 'remove']
     }
 ],
-  execute(message, args) {
+  execute(message, args, client) {
     message.channel.sendTyping();
     const action = args[0].toLowerCase();
     const channel = message.mentions.channels.first();

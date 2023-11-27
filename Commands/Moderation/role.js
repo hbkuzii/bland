@@ -9,7 +9,7 @@ module.exports = {
   category: "Moderation",
   example: "role @user RoleName",
   usage: "(member) <role>",
-  execute(message, args) {
+  execute(message, args, client) {
     message.channel.sendTyping();
     let targetUser = message.mentions.members.first() || message.guild.members.cache.get(args[0]);
 

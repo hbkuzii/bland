@@ -25,7 +25,7 @@ module.exports = {
         aliases : [ 'channel']
     }
 ],
-  execute(message, args) {
+  execute(message, args, client) {
     message.channel.sendTyping();
     const prefix = db.get(`prefix_${message.guild.id}`) || `,`;
 

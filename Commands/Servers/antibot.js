@@ -24,7 +24,7 @@ module.exports = {
     parameters : [ 'setting' ],
 }
 ],
-  execute(message, args) {
+  execute(message, args, client) {
     message.channel.sendTyping();
     
     const action = args[0]?.toLowerCase();

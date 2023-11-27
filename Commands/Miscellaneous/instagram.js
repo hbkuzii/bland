@@ -11,7 +11,7 @@ module.exports = {
     example: 'jamescharles',
     category: 'Miscellaneous',
     permissions: ['SendMessages'],
-    execute(message, args) {
+    execute(message, args, client) {
         try {
             const username = String(args[0]).toLowerCase();
             message.channel.sendTyping();

@@ -9,7 +9,7 @@ module.exports = {
   usage: '(html-file)',
   permissions: ['SendMessages'],
   category: "Miscellaneous",
-  execute(message, args) {
+  execute(message, args, client) {
     const attachment = message.attachments.first();
 
     if (!attachment.name.endsWith('.html')) {

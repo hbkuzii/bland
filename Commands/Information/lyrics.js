@@ -10,7 +10,7 @@ module.exports ={
     usage: '<song>',
     permissions: ['SendMessages'],
     category: "Miscellaneous",
-    async execute(message, args) {
+    async execute(message, args, client) {
         const songName = args.join(' ');
 
         const Client = new Genius.Client(process.env.GENIUS_ACCESS);

@@ -27,7 +27,7 @@ module.exports = {
     }
 ],
   category: "Miscellaneous",
-  execute(message, args) {
+  execute(message, args, client) {
     const command = String(args[0]).toLowerCase();
 
     if (!args[0] || !commands.includes(command)) {

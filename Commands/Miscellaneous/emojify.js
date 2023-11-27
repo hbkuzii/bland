@@ -8,7 +8,7 @@ module.exports = {
   example: "hello world",
   category: "Miscellaneous",
   
-  execute(message, args) {
+  execute(message, args, client) {
     message.channel.sendTyping();
     const emojifiedMessage = emojifyText(args.join(' '));
     message.reply(emojifiedMessage);

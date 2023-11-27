@@ -8,7 +8,7 @@ module.exports = {
   category: "Moderation",
   example: "curly 10m",
   usage: "(member) (duration)",
-  execute(message, args) {
+  execute(message, args, client) {
     message.channel.sendTyping();
     let timeUser = message.mentions.members.first() || message.guild.members.cache.get(args[0]);
 

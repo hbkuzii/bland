@@ -12,7 +12,7 @@ module.exports = {
   category: 'Miscellaneous',
   parameters: ['`website`', '`delay` (optional)'],
   permissions: ['SendMessages'],
-  execute(message, args) {
+  execute(message, args, client) {
     let url = args[0];
     let delaySeconds = 0;
   

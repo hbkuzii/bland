@@ -10,7 +10,7 @@ module.exports = {
     aliases : [ 'tr' ],
     category : 'Miscellaneous',
     permissions: ['SendMessages'],
-    execute(message, args) {
+    execute(message, args, client) {
         message.channel.sendTyping()
         try {
             if (!args[0]) {

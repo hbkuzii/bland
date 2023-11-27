@@ -10,7 +10,7 @@ module.exports = {
   parameters: ['`attachement`'],
   category: 'Miscellaneous',
   permissions: ['SendMessages'],
-  execute(message, args) {
+  execute(message, args, client) {
     const url = args[0];
     const attachedFile = message.attachments.first();
 

@@ -9,7 +9,7 @@ module.exports = {
   permissions: ['SendMessages'],
   category: 'Information',
   send: false,
-  execute(message, args) {
+  execute(message, args, client) {
     message.channel.sendTyping();
     const user = message.mentions.members.first() || message.guild.members.cache.get(args[0]) || message.guild.members.cache.find(r => (r.user.username.toLowerCase() === args.join(' ').toLowerCase() || r.displayName.toLowerCase() === args.join(' ').toLowerCase())) || message.member;
 

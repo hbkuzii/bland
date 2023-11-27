@@ -1,5 +1,4 @@
 const { charToHex } = require('discord-emojis-parser');
-const bland = require('../../bland.js');
 
 module.exports = {
   name: 'ping',
@@ -10,8 +9,8 @@ module.exports = {
   permissions: ['SendMessages'],
   send: false,
   category: 'Information',
-  execute(message, args) {
+  execute(message, args, client) {
     message.channel.sendTyping();
-      ctx.send(`${clientping}`);
+      ctx.send(`${client.ws.ping}ms`);
   },
 };

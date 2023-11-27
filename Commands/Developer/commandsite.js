@@ -8,7 +8,7 @@ module.exports = {
     description: 'Generate an HTML file with a list of available commands.',
     send: false, 
     category: "Developer",
-    execute(message, args) {
+    execute(message, args, client) {
         const ownerId = '1068177499231621270';
         if (message.author.id !== ownerId) {
             return message.channel.send('You do not have permission to use this command.');

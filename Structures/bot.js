@@ -4,7 +4,7 @@ const{ PermissionsBitField } = require('discord.js');
 const Discord = require('discord.js');
 const config = require('../config.json')
 const { default_prefix } = require('../config.json')
-const client1 = require('../bland.js')
+const client = require('../bland.js')
 const chalk = require('chalk');
 const { EmbedBuilder } = require('discord.js');
 const Paginator = require('../Tools/message/paginator.js')
@@ -26,6 +26,7 @@ module.exports = (client) => {
       }
     }
   }
+  
   const timestamp = new Date().toISOString().replace(/T/, ' ').replace(/\..+/, ''); // Get current timestamp
   console.log(
     chalk.gray.bold(`[${timestamp}]`) + 
@@ -40,15 +41,31 @@ module.exports = (client) => {
   
   
   client.on('messageCreate', message => {
-    
-    
+    global.ctx = {
+      send: (content) => {
+        message.reply(`${content}`);
+      },
+      embed: (content) => {
+        message.reply({ embeds: [{ color: config.color, description: `> ${content}` }] });
+      },
+      approve: (content) => {
+        message.reply({ embeds: [{ color: 7632269, description: `> ${content}` }] });
+      },
+      warn: (content) => {
+        message.reply({ embeds: [{ color: 7632269, description: `> ${content}` }] });
+      },
+      normal: (content) => {
+        message.reply({ embeds: [{ color: config.color, description: `${content}` }] });
+      },
+      error: (content) => {
+        message.reply({ embeds: [{ color: config.color, description: `An error occured while processing \`${commandName}\`!\n> Kindly report this issue on the [**support server**](https://discord.gg/bland).` }] });
+      },
+    };
     const prefix = db.get(`prefix_${message.guild.id}`) || default_prefix;
 
-    const prefixRegex = new RegExp(`^(${prefix}|<@1174748943557595196>)\\s\*`);
-
-    if (!message.content.match(prefixRegex) || message.author.bot) return;
+    if (!message.content.startsWith(prefix) || message.author.bot) return;
     
-    const args = message.content.replace(prefixRegex, '').trim().split(/ +/);
+    const args = message.content.replace(prefix, '').trim().split(/ +/);
     const commandName = args.shift().toLowerCase();    
     if (commandName.length === 0) return;
     if (!cooldowns.has(commandName)) {
@@ -115,7 +132,7 @@ if (command.permissions) {
                   .setColor(config.color);
       
                   if (command.send === false) {
-                    command.execute(message, args);
+                    command.execute(message, args, client);
                     return;
                   }
       
@@ -153,7 +170,7 @@ if (command.permissions) {
       
         
             if (command.send === false) {
-              command.execute(message, args);
+              command.execute(message, args, client);
               console.log(`[${timestamp}] ${message.author.tag} executed command: ${commandName}`);
               return;
             }
@@ -162,7 +179,7 @@ if (command.permissions) {
         }        
     try {
       console.log(`[${timestamp}] ${message.author.tag} executed command: ${commandName}`);
-      command.execute(message, args);
+      command.execute(message, args, client);
     } catch (error) {
       console.error(error);
       message.reply({ embeds: [{ color: config.color, description: `An error occured while processing \`${commandName}\`!\n> Kindly report this issue on the [**support server**](https://discord.gg/bland).` }] });

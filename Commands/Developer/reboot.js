@@ -9,7 +9,7 @@ module.exports = {
     ownerOnly: true,
     send: false,
     category: "Developer",
-    execute(message, args) {
+    execute(message, args, client) {
         if (message.author.id === '1068177499231621270') {
             try {
                 message.react('✅')

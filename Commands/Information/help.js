@@ -10,7 +10,7 @@ module.exports = {
   aliases: ['h', "commands", "cmds"],
   description: 'Display a list of available commands',
   permissions: ['SendMessages'],
-  execute(message, args) {
+  execute(message, args, client) {
     message.channel.sendTyping();
     const commandFiles = fs.readdirSync(path.join(__dirname, '../../Commands'));
 

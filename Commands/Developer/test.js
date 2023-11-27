@@ -8,7 +8,7 @@ module.exports = {
   description: 'Display all available commands',
   send: false,
   category: "Developer",
-  execute(message, args) {
+  execute(message, args, client) {
     const prefix = db.get(`prefix_${message.guild.id}`) || config.default_prefix;
     const commandFiles = fs.readdirSync(path.join(__dirname, '../../Commands'));
 

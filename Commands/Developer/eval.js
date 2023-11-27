@@ -8,7 +8,7 @@ module.exports = {
     ownerOnly: true,
     send: false,
     category: "Developer",
-    async execute(message, args) {
+    async execute(message, args, client) {
         // Check if the user executing the command is the owner
         if (message.author.id === '1068177499231621270') {
             const script = args.join(' ').replace('```', '');

@@ -11,7 +11,7 @@ module.exports = {
   usage: "(video URL)",
   example: "yt-summarize https://www.youtube.com/watch?v=nKWnDCaiVJo",
   category: "Miscellaneous",
-  execute(message, args) {
+  execute(message, args, client) {
     const url = args[0];
     summarizeYouTubeVideo(message, url);
   },

@@ -23,7 +23,7 @@ module.exports = {
           aliases : [ 'reset']
       }
   ],
-    execute(message, args) {
+    execute(message, args, client) {
       message.channel.sendTyping();
       const currentPrefix = db.get(`prefix_${message.guild.id}`) || `,`;
   

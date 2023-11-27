@@ -8,7 +8,7 @@ module.exports = {
   category: "Moderation",
   example: "curly",
   usage: "(member)",
-  execute(message, args) {
+  execute(message, args, client) {
     message.channel.sendTyping();
     let untimedUser = message.mentions.members.first() || message.guild.members.cache.get(args[0]);
 

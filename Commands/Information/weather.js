@@ -10,7 +10,7 @@ module.exports = {
     example : 'Toronto',
     category : 'Miscellaneous',
     permissions: ['SendMessages'],
-    async execute(message, args) {
+    async execute(message, args, client) {
 
         try {
             message.channel.sendTyping();

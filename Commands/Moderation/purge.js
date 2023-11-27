@@ -6,7 +6,7 @@ module.exports ={
             permissions: ['ManageMessages'],
             usage: '(index)',
             category: "Moderation",
-    async execute(message, args) {
+    async execute(message, args, client) {
         try {
 
             const input = parseInt(args[0]);

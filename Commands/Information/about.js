@@ -10,7 +10,7 @@ module.exports = {
   permissions: ['SendMessages'],
   send: false,
   category: 'Information',
-  execute(message) {
+  execute(message, args, client) {
     const cpus = os.cpus();
     const cpu = cpus[0];
     const total = Object.values(cpu.times).reduce(

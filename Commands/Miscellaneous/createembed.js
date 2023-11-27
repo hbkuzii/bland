@@ -11,7 +11,7 @@ module.exports = {
     aliases: ['definition', 'define'],
     module: 'Miscellaneous',
 
-    execute(message, args) {
+    execute(message, args, client) {
         try {
             const parser = new WiktionaryParser();
             const englishResults = parser.parse(args[0]);

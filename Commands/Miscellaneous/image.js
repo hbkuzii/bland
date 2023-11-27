@@ -11,7 +11,7 @@ module.exports = {
     example: 'jordan 4s',
     parameters: ['`search`'],
     category: 'Miscellaneous',
-    execute(message, args) {
+    execute(message, args, client) {
         const filter = (reaction, user) => user.id === message.author.id && (reaction.emoji.name === '⬅️' || reaction.emoji.name === '➡️');
         let page = 0;
         let search = args.join(' ');
