@@ -11,6 +11,6 @@ module.exports = {
   category: 'Information',
   execute(message, args, client) {
     message.channel.sendTyping();
-      ctx.send(`${client.ws.ping}ms`);
+      ctx.normal(`> ${client.ws.ping}ms`);
   },
 };
