@@ -7,6 +7,7 @@ module.exports = {
   usage: "(text)",
   example: "hello world",
   category: "Miscellaneous",
+  
   execute(message, args) {
     message.channel.sendTyping();
     const emojifiedMessage = emojifyText(args.join(' '));

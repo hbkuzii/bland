@@ -270,14 +270,40 @@ return false; // Prevent the default context menu
                       </p>
                   
 
+                      <p class="command-item" onclick="toggleCommandInfo('banner')">
+                          <span>banner</span> Show user's banner
+                      </p>
+                  
+
+                      <p class="command-item" onclick="toggleCommandInfo('emojilist')">
+                          <span>emojilist</span> List all emojis in the server
+                      </p>
+                  
+
                       <p class="command-item" onclick="toggleCommandInfo('help')">
                           <span>help</span> Display a list of available commands
                       </p>
                   
 
+                      <p class="command-item" onclick="toggleCommandInfo('lyrics')">
+                          <span>lyrics</span> Search for lyrics of a song
+                      </p>
+                      <div id="lyrics-info" style="display: none;">
+                          <p>ㅤㅤㅤㅤUsage: lyrics &lt;song&gt;</p>
+                      </div>
+                  
+
                       <p class="command-item" onclick="toggleCommandInfo('ping')">
                           <span>ping</span> Show websocket latency
                       </p>
+                  
+
+                      <p class="command-item" onclick="toggleCommandInfo('weather')">
+                          <span>weather</span> Get the current weather for a location
+                      </p>
+                      <div id="weather-info" style="display: none;">
+                          <p>ㅤㅤㅤㅤUsage: weather (city)</p>
+                      </div>
                   
             </div>
             <br>   
@@ -286,6 +312,11 @@ return false; // Prevent the default context menu
             <div class="Miscellaneous">
                 <h1>ㅤMiscellaneous</h1>
                 
+                      <p class="command-item" onclick="toggleCommandInfo('dictionary')">
+                          <span>dictionary</span> Show the definition of a word
+                      </p>
+                  
+
                       <p class="command-item" onclick="toggleCommandInfo('emojify')">
                           <span>emojify</span> Emojify a message
                       </p>
@@ -298,7 +329,15 @@ return false; // Prevent the default context menu
                           <span>fortnite*</span> Lookup or view the current fortnite item shop
                       </p>
                       <div id="fortnite-info" style="display: none;">
-                          <p>ㅤㅤㅤㅤUsage: fortnite (subcommand) &lt;args&gt;<br>ㅤㅤㅤㅤfortnite lookup - Search for a fortnite cosmetic<br>ㅤㅤㅤㅤfortnite shop - Display the current item shop</p>
+                          <p>ㅤㅤㅤㅤUsage: fortnite (subcommand) &lt;args&gt;</p>
+                      </div>
+                  
+
+                      <p class="command-item" onclick="toggleCommandInfo('image')">
+                          <span>image</span> Search Google for an image
+                      </p>
+                      <div id="image-info" style="display: none;">
+                          <p>ㅤㅤㅤㅤUsage: image (search)</p>
                       </div>
                   
 
@@ -310,19 +349,19 @@ return false; // Prevent the default context menu
                       </div>
                   
 
-                      <p class="command-item" onclick="toggleCommandInfo('lyrics')">
-                          <span>lyrics</span> Search for lyrics of a song
-                      </p>
-                      <div id="lyrics-info" style="display: none;">
-                          <p>ㅤㅤㅤㅤUsage: lyrics &lt;song&gt;</p>
-                      </div>
-                  
-
                       <p class="command-item" onclick="toggleCommandInfo('previewwebsite')">
                           <span>previewwebsite</span> Preview a website by uploading its HTML file
                       </p>
                       <div id="previewwebsite-info" style="display: none;">
                           <p>ㅤㅤㅤㅤUsage: previewwebsite (html-file)</p>
+                      </div>
+                  
+
+                      <p class="command-item" onclick="toggleCommandInfo('screenshot')">
+                          <span>screenshot</span> Takes a screenshot of a website
+                      </p>
+                      <div id="screenshot-info" style="display: none;">
+                          <p>ㅤㅤㅤㅤUsage: screenshot (website) &lt;delay in seconds&gt;</p>
                       </div>
                   
 
@@ -388,6 +427,14 @@ return false; // Prevent the default context menu
                       </div>
                   
 
+                      <p class="command-item" onclick="toggleCommandInfo('role')">
+                          <span>role</span> Assign or remove a role to/from a user
+                      </p>
+                      <div id="role-info" style="display: none;">
+                          <p>ㅤㅤㅤㅤUsage: role (member) &lt;role&gt;</p>
+                      </div>
+                  
+
                       <p class="command-item" onclick="toggleCommandInfo('timeout')">
                           <span>timeout</span> Timeout a user
                       </p>
@@ -410,11 +457,19 @@ return false; // Prevent the default context menu
             <div class="Servers">
                 <h1>ㅤServers</h1>
                 
+                      <p class="command-item" onclick="toggleCommandInfo('antibot')">
+                          <span>antibot*</span> Enable, disable, or check the status of the antibot feature
+                      </p>
+                      <div id="antibot-info" style="display: none;">
+                          <p>ㅤㅤㅤㅤUsage: antibot (subcommand)</p>
+                      </div>
+                  
+
                       <p class="command-item" onclick="toggleCommandInfo('poster')">
                           <span>poster*</span> Set up automatic avatar posting
                       </p>
                       <div id="poster-info" style="display: none;">
-                          <p>ㅤㅤㅤㅤUsage: poster (subcommand) &lt;args&gt;<br>ㅤㅤㅤㅤposter channel - set the poster channel<br>ㅤㅤㅤㅤposter clear - clear the poster channel</p>
+                          <p>ㅤㅤㅤㅤUsage: poster (subcommand) &lt;args&gt;</p>
                       </div>
                   
 
@@ -422,7 +477,15 @@ return false; // Prevent the default context menu
                           <span>prefix*</span> View or change guild prefix
                       </p>
                       <div id="prefix-info" style="display: none;">
-                          <p>ㅤㅤㅤㅤUsage: prefix &lt;subcommand&gt; &lt;args&gt;<br>ㅤㅤㅤㅤprefix set - set the guild prefix<br>ㅤㅤㅤㅤprefix reset - reset the guild prefix</p>
+                          <p>ㅤㅤㅤㅤUsage: prefix &lt;subcommand&gt; &lt;args&gt;</p>
+                      </div>
+                  
+
+                      <p class="command-item" onclick="toggleCommandInfo('discrim')">
+                          <span>discrim*</span> Manage discrim/tags settings
+                      </p>
+                      <div id="discrim-info" style="display: none;">
+                          <p>ㅤㅤㅤㅤUsage: discrim (subcommand) &lt;args&gt;</p>
                       </div>
                   
             </div>

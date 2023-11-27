@@ -11,7 +11,20 @@ module.exports = {
   example: "channel #tags",
   category: "Servers",
   parameters: ['\`channel\`'],
-  subcommands: "`discrim channel` - set the discrim channel\n`discrim clear` - clear the discrim channel",
+  subcommands : [
+    {
+        name : 'discrim channel',
+        description : 'set the discrim channel',
+        parameters : [ 'channel' ],
+        usage : '(channel)',
+        example : '#usernames',
+    },
+    {
+        name : 'discrim clear',
+        description : 'clear the discrim channel',
+        aliases : [ 'channel']
+    }
+],
   execute(message, args) {
     message.channel.sendTyping();
     const prefix = db.get(`prefix_${message.guild.id}`) || `,`;

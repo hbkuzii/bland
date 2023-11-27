@@ -9,6 +9,7 @@ module.exports = {
     example : 'en fuego',
     aliases : [ 'tr' ],
     category : 'Miscellaneous',
+    permissions: ['SendMessages'],
     execute(message, args) {
         message.channel.sendTyping()
         try {

@@ -10,7 +10,7 @@ module.exports = {
     usage: '(username)',
     example: 'jamescharles',
     category: 'Miscellaneous',
-
+    permissions: ['SendMessages'],
     execute(message, args) {
         try {
             const username = String(args[0]).toLowerCase();
@@ -59,68 +59,68 @@ module.exports = {
 };
 
 async function serverRevision() {
-    const response = await axios.get(
-      'https://www.instagram.com/accounts/login/',
-      { responseType: 'text' }
-    );
-    const text = response.data;
-  
-    const serverIdMatches = text.match(/server_revision":(\d*)/);
-    const appIdMatches = text.match(/appId":"(\d*)/);
-  
-    if (!serverIdMatches || !appIdMatches) {
-      throw new Error('Failed to retrieve server revision');
-    }
-  
-    const serverId = serverIdMatches[1];
-    const appId = appIdMatches[1];
-  
-    return { server_id: serverId, app_id: appId };
+  const response = await axios.get(
+    'https://www.instagram.com/accounts/login/',
+    { responseType: 'text' }
+  );
+  const text = response.data;
+
+  const serverIdMatches = text.match(/server_revision":(\d*)/);
+  const appIdMatches = text.match(/appId":"(\d*)/);
+
+  if (!serverIdMatches || !appIdMatches) {
+    throw new Error('Failed to retrieve server revision');
   }
 
-async function get_profile (username) {
-    const { server_id, app_id } = await serverRevision();
+  const serverId = serverIdMatches[1];
+  const appId = appIdMatches[1];
 
-    const response = await axios.get(
-        'https://i.instagram.com/api/v1/users/web_profile_info/',
-        {
-          params: { username: username },
-          headers: {
-            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:104.0) 20100101 Firefox/103.0',
-            Accept: '*/*',
-            'Accept-Language': 'en-US,en;q=0.3',
-            DNT: '1',
-            Origin: 'https://www.instagram.com',
-            Referer: `https://www.instagram.com/${username}/`,
-            Connection: 'keep-alive',
-            'Alt-Used': 'i.instagram.com',
-            'Sec-GPC': '1',
-            'Sec-Fetch-Dest': 'empty',
-            'Sec-Fetch-Mode': 'cors',
-            'Sec-Fetch-Site': 'same-site',
-            'X-Instagram-AJAX': server_id,
-            'X-IG-App-ID': app_id,
-            'X-ASBD-ID': '198337',
-            'X-IG-WWW-Claim': '0'
-          }
+  return { server_id: serverId, app_id: appId };
+}
+
+async function get_profile (username) {
+  const { server_id, app_id } = await serverRevision();
+
+  const response = await axios.get(
+      'https://i.instagram.com/api/v1/users/web_profile_info/',
+      {
+        params: { username: username },
+        headers: {
+          'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:104.0) 20100101 Firefox/103.0',
+          Accept: '*/*',
+          'Accept-Language': 'en-US,en;q=0.3',
+          DNT: '1',
+          Origin: 'https://www.instagram.com',
+          Referer: `https://www.instagram.com/${username}/`,
+          Connection: 'keep-alive',
+          'Alt-Used': 'i.instagram.com',
+          'Sec-GPC': '1',
+          'Sec-Fetch-Dest': 'empty',
+          'Sec-Fetch-Mode': 'cors',
+          'Sec-Fetch-Site': 'same-site',
+          'X-Instagram-AJAX': server_id,
+          'X-IG-App-ID': app_id,
+          'X-ASBD-ID': '198337',
+          'X-IG-WWW-Claim': '0'
         }
-      );
-    
-      const data = response.data;
-      const user = data.data.user;
-    
-      return {
-        id: user.id,
-        username: user.username,
-        display_name: user.full_name,
-        description: user.biography,
-        avatar_url: user.profile_pic_url_hd,
-        statistics: {
-          verified: user.is_verified,
-          private: user.is_private,
-          posts: user.edge_owner_to_timeline_media.count,
-          followers: user.edge_followed_by.count,
-          following: user.edge_follow.count
-        }
-      };
+      }
+    );
+  
+    const data = response.data;
+    const user = data.data.user;
+  
+    return {
+      id: user.id,
+      username: user.username,
+      display_name: user.full_name,
+      description: user.biography,
+      avatar_url: user.profile_pic_url_hd,
+      statistics: {
+        verified: user.is_verified,
+        private: user.is_private,
+        posts: user.edge_owner_to_timeline_media.count,
+        followers: user.edge_followed_by.count,
+        following: user.edge_follow.count
+      }
+    };
 }

@@ -10,7 +10,22 @@ module.exports = {
   usage : '(subcommand) <args>',
   example : 'lookup Wildcat',
   aliases : [ 'fort', 'fn' ],
-  subcommands: '\`fortnite lookup\` - Search for a fortnite cosmetic\n\`fortnite shop\` - Display the current item shop',
+  permissions: ['SendMessages'],
+  subcommands : [
+    {
+        name : 'fortnite lookup',
+        description : 'Search for a cosmetic w/ occurences',
+        parameters : [ 'cosmetic' ],
+        usage : '(cosmetic)',
+        example : 'Renegade Raider',
+        aliases : [ 'search', 'find' ]
+    },
+    {
+        name : 'fortnite shop',
+        description : 'Get the current Fortnite item shop',
+        aliases : [ 'store' ]
+    }
+],
   category: "Miscellaneous",
   execute(message, args) {
     const command = String(args[0]).toLowerCase();

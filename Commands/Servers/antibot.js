@@ -5,9 +5,25 @@ module.exports = {
   description: "Enable, disable, or check the status of the antibot feature",
   usage: "(subcommand)",
   parameters: ['\`channel\`'],
-  subcommands: '\`antibot enable\` - enable antibot feature\n\`antibot status\` - view antibot settings\n\`antibot disabled\` - disable antibot feature',
   category: 'Servers',
   permissions: ["ManageGuild"],
+  subcommands : [
+    {
+        name : 'antibot enable',
+        description : 'enable antibot feature',
+        parameters : [ 'setting' ],
+    },
+    {
+        name : 'antibot disable',
+        description : 'disable antibot feature',
+        parameters : [ 'setting' ],
+    },
+    {
+    name : 'antibot status',
+    description : 'view antibot settings',
+    parameters : [ 'setting' ],
+}
+],
   execute(message, args) {
     message.channel.sendTyping();
     

@@ -9,9 +9,11 @@ module.exports = {
     usage : '(city)',
     example : 'Toronto',
     category : 'Miscellaneous',
+    permissions: ['SendMessages'],
     async execute(message, args) {
 
         try {
+            message.channel.sendTyping();
             const location = args.join(' ');
 
             weather.find({ search: location, degreeType: 'C' }, function (err, result) {
@@ -25,7 +27,7 @@ module.exports = {
                 }
 
                 const current = result[0].current;
-console.log(current)
+                console.log(current)
                 const embed = new EmbedBuilder({
                     author : {
                         name : message.member.displayName,

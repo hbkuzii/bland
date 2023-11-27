@@ -6,6 +6,7 @@ module.exports = {
     name: 'emojilist',
     description: 'List all emojis in the server',
     category: 'Miscellaneous',
+    permissions: ['SendMessages'],
     send: false,
     async execute(message, args) {
         try {

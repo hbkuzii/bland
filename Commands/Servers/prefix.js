@@ -8,8 +8,21 @@ module.exports = {
     permissions: ["ManageGuild"],
     send: false,
     parameters: ['\`prefix\`'],
-    subcommands: '\`prefix set\` - set the guild prefix\n\`prefix reset\` - reset the guild prefix',
     category: 'Servers',
+    subcommands : [
+      {
+          name : 'prefix set',
+          description : 'set the guild prefix',
+          parameters : [ 'prefix' ],
+          usage : '(prefix)',
+          example : '!',
+      },
+      {
+          name : 'prefix reset',
+          description : 'reset the guild prefix',
+          aliases : [ 'reset']
+      }
+  ],
     execute(message, args) {
       message.channel.sendTyping();
       const currentPrefix = db.get(`prefix_${message.guild.id}`) || `,`;

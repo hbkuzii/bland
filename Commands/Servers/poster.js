@@ -9,20 +9,34 @@ module.exports = {
   example: "channel #pictures",
   category: 'Servers',
   parameters: ['\`channel\`'],
-  subcommands: '\`poster channel\` - set the poster channel\n\`poster clear\` - clear the poster channel',
+  subcommands : [
+    {
+        name : 'poster channel',
+        description : 'set the poster channel',
+        parameters : [ 'channel' ],
+        usage : '(channel)',
+        example : '#poster',
+        aliases : [ 'set']
+    },
+    {
+        name : 'poster clear',
+        description : 'clear the poster channel',
+        aliases : [ 'clear', 'remove']
+    }
+],
   execute(message, args) {
     message.channel.sendTyping();
     const action = args[0].toLowerCase();
     const channel = message.mentions.channels.first();
 
-    if (action === 'channel') {
+    if (action === 'channel' || action === 'set') {
       if (!channel) {
         return ctx.warn('Please mention a valid channel.');
       }
 
       db.set(`pfpchannel_${message.guild.id}`, channel.id);
       ctx.approve(`Poster channel set to ${channel}`);
-    } else if (action === 'clear') {
+    } else if (action === 'clear' || action === 'remove') {
       db.delete(`pfpchannel_${message.guild.id}`);
       ctx.approve('Poster channel cleared.');
     } else {

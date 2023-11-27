@@ -15,6 +15,7 @@ module.exports = {
         example : 'MrBeast',
         aliases : [ 'tt' ],
         category: "Miscellaneous",
+        permissions: ['SendMessages'],
     async execute (message, args) {
         let username = String(args[0]).toLowerCase()
 

@@ -10,6 +10,7 @@ module.exports = {
         example : 'Amiri',
         aliases : [ 'urbandictionary', 'ud' ],
         category : 'Miscellaneous',
+        permissions: ['SendMessages'],
     async execute (message, args) {
         try {
 
