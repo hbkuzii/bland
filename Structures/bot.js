@@ -64,7 +64,6 @@ module.exports = (client) => {
     const prefix = db.get(`prefix_${message.guild.id}`) || default_prefix;
 
     if (!message.content.startsWith(prefix) || message.author.bot) return;
-    
     const args = message.content.replace(prefix, '').trim().split(/ +/);
     const commandName = args.shift().toLowerCase();    
     if (commandName.length === 0) return;
@@ -133,6 +132,7 @@ if (command.permissions) {
       
                   if (command.send === false) {
                     command.execute(message, args, client);
+                    console.log(`[${timestamp}] ${message.author.tag} executed command: ${commandName}`);
                     return;
                   }
       
@@ -165,6 +165,7 @@ if (command.permissions) {
                       text: `${module} ∙ Page {page} of {pages}`,
                   }).construct();
               } else {
+                console.log(`[${timestamp}] ${message.author.tag} executed command: ${commandName}`);
                   return message.reply({ embeds: [mainEmbed] });
               }
       

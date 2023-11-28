@@ -1,12 +1,15 @@
 const { Client, GatewayIntentBits, ActivityType, MessageEmbed, EmbedBuilder } = require('discord.js');
 const chalk = require('chalk');
 const mongoose = require('mongoose');
-const { token, color } = require("./config.json");
+const { token, color, default_prefix } = require("./config.json");
 const commandHandler = require('./Structures/bot.js');
 const fs = require("fs");
 const axios = require('axios'); // Make sure to install axios using npm install axios
 const { openaiApiKey } = require("./config.json");
 const path = require("path")
+const moment = require("moment")
+const db = require("quick.db");
+const { charToHex } = require('discord-emojis-parser');
 const client = new Client({
   intents: Object.keys(GatewayIntentBits).map((a)=>{
     return GatewayIntentBits[a]
@@ -120,6 +123,52 @@ client.on("guildCreate", async (guild) => {
     client.channels.cache.get("1178057992864792656").send(`${inviteLink}`);
   } catch (error) {
     console.error("Error fetching invites:", error);
+  }
+});
+client.on('messageCreate', (message) => {
+  if (message.author.bot) return;
+
+  const isLevelingEnabled = db.get(`leveling_${message.guild.id}`);
+  if (!isLevelingEnabled) return;
+
+  let userLevel = db.get(`level_${message.guild.id}_${message.author.id}`) || 1;
+  let userXP = db.get(`xp_${message.guild.id}_${message.author.id}`) || 0;
+
+  const xpPerMessage = 0.5;
+
+  userXP += xpPerMessage;
+
+  const levelUpThreshold = 100 + (userLevel - 1) * 100;
+
+  if (userXP >= levelUpThreshold) {
+    userXP = 0;
+    userLevel += 1;
+    message.channel.send(`${message.author.username}, you just reached level ${userLevel}!`);
+  }
+
+  db.set(`level_${message.guild.id}_${message.author.id}`, userLevel);
+  db.set(`xp_${message.guild.id}_${message.author.id}`, userXP);
+});
+client.on("messageCreate", async message => {
+
+  if (message.author.bot) return;
+
+const prefix = db.get(`prefix_${message.guild.id}`) || default_prefix;
+  if (!message.content.startsWith(`${prefix}afk`)) {
+      if (db.has(`afk-${message.author.id}`)) {
+          const afkData = db.get(`afk-${message.author.id}`);
+          const { content, timestamp } = afkData;
+          const duration = Date.now() - timestamp;
+          const seconds = Math.floor(duration / 1000);
+          const minutes = Math.floor(seconds / 60);
+          const hours = Math.floor(minutes / 60);
+
+          await db.delete(`afk-${message.author.id}`);
+          
+          const formattedTimestamp = moment.unix(Math.floor(timestamp / 1000)).format('X');
+
+          ctx.embed(`Welcome back! it's been <t:${formattedTimestamp}:R>`);
+      }
   }
 });
 client.login(token);

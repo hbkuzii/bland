@@ -3,7 +3,7 @@ const config = require('../../config.json');
 
 module.exports = {
   name: 'role',
-  aliases: ["setrole", "assignrole"],
+  aliases: ["setrole", "assignrole", "r"],
   description: 'Assign or remove a role to/from a user',
   permissions: ['ManageRoles'],
   category: "Moderation",

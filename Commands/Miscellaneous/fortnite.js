@@ -27,7 +27,7 @@ module.exports = {
     }
 ],
   category: "Miscellaneous",
-  execute(message, args, client) {
+  async execute(message, args, client) {
     const command = String(args[0]).toLowerCase();
 
     if (!args[0] || !commands.includes(command)) {
@@ -37,11 +37,8 @@ module.exports = {
     switch (true) {
         case command === 'lookup' || command === 'search' || command === 'find': {
             try {
-                if (!args[1]) {
-                    return this.bot.help(message, this.commands[0]);
-                }
                 message.channel.sendTyping();
-                const results = fetch(
+                const results = await fetch(
                     `https://fortnite-api.com/v2/cosmetics/br/search?matchMethod=contains&name=${encodeURIComponent(
                         args.slice(1).join(' ')
                     )}`,
@@ -49,17 +46,11 @@ module.exports = {
                         method: 'GET',
                     }
                 ).then((response) => response.json()).catch((error) => {
-                    return this.bot.warn(
-                        message,
-                        `Bad response (\`${error.response.status}\`) from the **API**`
-                    );
+                    return ctx.warn(`Bad response (\`${error.response.status}\`) from the **API**`);
                 });
 
                 if (results.status !== 200) {
-                    return this.bot.warn(
-                        message,
-                        `Cosmetic **${args.slice(1).join(' ')}** not found`
-                    );
+                    return ctx.warn(`Cosmetic **${args.slice(1).join(' ')}** not found`);
                 }
 
                 const { name, description, type, introduction, added, shopHistory } = results.data;
@@ -72,7 +63,7 @@ module.exports = {
                         .slice(0, 5)
                         .map((date) => new Date(date).getTime());
 
-                    Promise.all(
+                    await Promise.all(
                         dates.map((date) => {
                             date = Math.floor(date / 1000);
 
@@ -81,7 +72,7 @@ module.exports = {
                     );
                 }
 
-                const results2 = fetch(
+                const results2 = await fetch(
                     `https://fnbr.co/api/images?search=${encodeURI(
                         name
                     )}&limit=${encodeURI(1)}&type=${encodeURI(type.value)}`,
@@ -93,7 +84,6 @@ module.exports = {
                     }
                 ).then((response) => response.json());
 
-                console.log(results2.data);
 
                 const { images, readableType } = results2.data[0];
 
@@ -139,6 +129,7 @@ module.exports = {
                     ],
                 });
             } catch (error) {
+                console.log(error)
                 return ctx.error()
             }
 

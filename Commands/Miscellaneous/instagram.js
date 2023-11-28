@@ -11,12 +11,12 @@ module.exports = {
     example: 'jamescharles',
     category: 'Miscellaneous',
     permissions: ['SendMessages'],
-    execute(message, args, client) {
+    async execute(message, args, client) {
         try {
             const username = String(args[0]).toLowerCase();
             message.channel.sendTyping();
-
-            const user = get_profile(username)
+            const user = await get_profile(username)
+            console.log(user.display_name)
             const embed = new EmbedBuilder({
                 author: {
                     name: message.member.displayName,
