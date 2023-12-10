@@ -40,27 +40,62 @@ module.exports = (client) => {
   global.parserInstance = Parser;
   
   
-  client.on('messageCreate', message => {
-    global.ctx = {
-      send: (content) => {
-        message.reply(`${content}`);
-      },
-      embed: (content) => {
-        message.reply({ embeds: [{ color: config.color, description: `> ${content}` }] });
-      },
-      approve: (content) => {
-        message.reply({ embeds: [{ color: 7632269, description: `> ${content}` }] });
-      },
-      warn: (content) => {
-        message.reply({ embeds: [{ color: 7632269, description: `> ${content}` }] });
-      },
-      normal: (content) => {
-        message.reply({ embeds: [{ color: config.color, description: `${content}` }] });
-      },
-      error: (content) => {
-        message.reply({ embeds: [{ color: config.color, description: `An error occured while processing \`${commandName}\`!\n> Kindly report this issue on the [**support server**](https://discord.gg/bland).` }] });
-      },
-    };
+  const translate = require('@iamtraction/google-translate');
+  const translateContent = async (content, chosenLanguage) => {
+    if (chosenLanguage && chosenLanguage !== 'en') {
+        const translation = await translate(content, { to: chosenLanguage });
+        return translation.text;
+    } else {
+        return content;
+    }
+};
+  client.on('messageCreate', async (message) => {
+      try {
+          const chosenLanguage1 = await db.get(`language_${message.author.id}`);
+  
+          const translateAndReply = async (content) => {
+              if (chosenLanguage1) {
+                  const translation = await translate(content, { to: chosenLanguage1 });
+                  return translation.text;
+              } else {
+                  return content;
+              }
+          };
+  
+          global.ctx = {
+              send: async (content) => {
+                  const translatedContent = await translateAndReply(content);
+                  message.reply(`${translatedContent}`);
+              },
+              embed: async (content) => {
+                  const translatedContent = await translateAndReply(content);
+                  message.reply({ embeds: [{ color: config.color, description: `> ${translatedContent}` }] });
+              },
+              approve: async (content) => {
+                  const translatedContent = await translateAndReply(content);
+                  message.reply({ embeds: [{ color: config.color, description: `> ${translatedContent}` }] });
+              },
+              warn: async (content) => {
+                  const translatedContent = await translateAndReply(content);
+                  message.reply({ embeds: [{ color: config.color, description: `> ${translatedContent}` }] });
+              },
+              normal: async (content) => {
+                  const translatedContent = await translateAndReply(content);
+                  message.reply({ embeds: [{ color: config.color, description: `${translatedContent}` }] });
+              },
+              error: async (content) => {
+                  const translatedContent = await translateAndReply(content);
+                  message.channel.send({
+                      embeds: [{
+                          color: config.color,
+                          description: `An error occurred while processing \`${commandName}\`!\n> Kindly report this issue on the [**support server**](https://discord.gg/bland).`
+                      }]
+                  });
+              },
+          };
+      } catch (error) {
+          console.error(error);
+      }
     const prefix = db.get(`prefix_${message.guild.id}`) || default_prefix;
 
     if (!message.content.startsWith(prefix) || message.author.bot) return;
@@ -96,14 +131,16 @@ module.exports = (client) => {
   
   
 
-if (command.permissions) {
-  const requiredPermissions = command.permissions;
-  const hasPermission = message.member && message.member.permissions.has(PermissionsBitField.Flags[requiredPermissions]);
-  if (!hasPermission) {
-    ctx.warn(`You lack \`${requiredPermissions.join(', ')}\` permission to execute \`${commandName}\`!`);
-    return;
-  }
-}
+    if (command.permissions) {
+      const requiredPermissions = command.permissions;
+      const hasAllPermissions = message.member && requiredPermissions.every(permission => message.member.permissions.has(PermissionsBitField.Flags[permission]));
+    
+      if (!hasAllPermissions) {
+        ctx.warn(`You're missing one or more of the following permissions: \`${requiredPermissions.join('\` ,\`')}\` to execute \`${commandName}\`!`);
+        return;
+      }
+    }
+    
 
         const parameters = Array.isArray(command.parameters) && command.parameters.length > 0
 ?       command.parameters.join(', ').replace(/`/g, ''): 'N/A';      
@@ -113,20 +150,24 @@ if (command.permissions) {
 
         if (args.length === 0) {
           if (message.attachments.size === 0) {
+            const chosenLanguage1 = await db.get(`language_${message.author.id}`);
+
+            const translateAndReply = async (content) => {
+                return await translateContent(content, chosenLanguage1);
+            };
+
               const mainEmbed = new EmbedBuilder()
-                  .setTitle(`Command: ${command.name} (${aliases})`)
-                  .setAuthor({ name: `${module}`, iconURL: client.user.displayAvatarURL({ dynamic: true }) })
-                  .setDescription(`${command.description}`)
+        .setTitle(`Command: ${await translateAndReply(command.name)} (${await translateAndReply(aliases)})`)
+        .setDescription(`${await translateAndReply(command.description)}`)
                   .addFields(
-                      { name: 'Parameters', value: `${parameters}`, inline: true },
+                    { name: 'Parameters', value: `${await translateAndReply(parameters)}`, inline: true },
                       { name: 'Permissions', value: `${command.permissions}`, inline: true },
                       { name: 'Cooldown', value: `2.5s`, inline: true }
                   )
-                  .setFooter({ text: `Module: ${module}`, iconURL: message.author.displayAvatarURL({ dynamic: true }) })
                   .addFields(
-                      { name: 'usage', value: `>>> \`\`\`bf\nSyntax ,${command.name} ${usage}\`\`\`` }
+                    { name: 'usage', value: `>>> \`\`\`bf\nSyntax ,${await translateAndReply(command.name)} ${await translateAndReply(usage)}\`\`\`` }
                   )
-                  .setFooter({ text: `Module: ${module}`, iconURL: message.author.displayAvatarURL({ dynamic: true }) })
+                  .setFooter({ text: `Module: ${await translateAndReply(module)}`, iconURL: message.author.displayAvatarURL({ dynamic: true }) })
                   .setTimestamp()
                   .setColor(config.color);
       
@@ -136,37 +177,44 @@ if (command.permissions) {
                     return;
                   }
       
-              if (command && command.subcommands && command.subcommands.length > 0) {
-                  const subcommandsText = command.subcommands.map(subcommand => `\`${subcommand.name}\``).join(', ');
-      
-                  const subcommandsEmbeds = command.subcommands.map((subcommand) => {
-                      const subcommandParameters = Array.isArray(subcommand.parameters) ? subcommand.parameters.join(', ') : 'N/A';
-                      const subcommandAliases = Array.isArray(subcommand.aliases) ? subcommand.aliases.join(', ') : 'N/A';
-                      const subcommandusage = subcommand.usage || 'ㅤ';
-                      const subcommandparameters = Array.isArray(command.parameters) && command.parameters.length > 0
-                      ?       command.parameters.join(', ').replace(/`/g, ''): 'N/A';   
-                      return new EmbedBuilder()
-                          .setTitle(`Subcommand: ${subcommand.name} (${subcommandAliases})`)
-                          .setAuthor({ name: `${module}`, iconURL: client.user.displayAvatarURL({ dynamic: true }) })
-                          .setDescription(`${subcommand.description}`)
+                  if (command && command.subcommands && command.subcommands.length > 0) {
+                    const subcommandsText = command.subcommands.map(subcommand => `\`${subcommand.name}\``).join(', ');
+        
+                    const subcommandsEmbeds = command.subcommands.map((subcommand) => {
+                        const subcommandParameters = Array.isArray(subcommand.parameters) ? subcommand.parameters.join(', ') : 'N/A';
+                        const subcommandAliases = Array.isArray(subcommand.aliases) ? subcommand.aliases.join(', ') : 'N/A';
+                        const subcommandusage = subcommand.usage || 'ㅤ';
+                        const subcommandparameters = Array.isArray(command.parameters) && command.parameters.length > 0
+                        ?       command.parameters.join(', ').replace(/`/g, ''): 'N/A';   
+                        return new EmbedBuilder()
+                            .setTitle(`Subcommand: ${subcommand.name} (${subcommandAliases})`)
+                            .setAuthor({ name: `${module}`, iconURL: client.user.displayAvatarURL({ dynamic: true }) })
+                            .setDescription(`${subcommand.description}`)
+                            .addFields(
+                              { name: 'Parameters', value: `${subcommandparameters}`, inline: true },
+                              { name: 'Permissions', value: `${command.permissions}`, inline: true },
+                              { name: 'Cooldown', value: `2.5s`, inline: true }
+                          )
                           .addFields(
-                            { name: 'Parameters', value: `${subcommandparameters}`, inline: true },
-                            { name: 'Permissions', value: `${command.permissions}`, inline: true },
-                            { name: 'Cooldown', value: `2.5s`, inline: true }
+                            { name: 'usage', value: `>>> \`\`\`bf\nSyntax ,${subcommand.name} ${subcommandusage}\`\`\`` }
                         )
-                        .addFields(
-                          { name: 'usage', value: `>>> \`\`\`bf\nSyntax ,${subcommand.name} ${subcommandusage}\`\`\`` }
-                      )
-                          .setColor(config.color);
-                  });
-      
-                  return new paginatorInstance(message, {
-                      embeds: [mainEmbed, ...subcommandsEmbeds],
-                      text: `${module} ∙ Page {page} of {pages}`,
-                  }).construct();
-              } else {
+                            .setColor(config.color);
+                    });
+        
+                    return new paginatorInstance(message, {
+                        embeds: [mainEmbed, ...subcommandsEmbeds],
+                        text: `${module} ∙ Page {page} of {pages}`,
+                    }).construct();
+                } else {
+                  console.log(`[${timestamp}] ${message.author.tag} executed command: ${commandName}`);
+                    return message.reply({ embeds: [mainEmbed] });
+                }
+        
+          
+              if (command.send === false) {
+                command.execute(message, args, client);
                 console.log(`[${timestamp}] ${message.author.tag} executed command: ${commandName}`);
-                  return message.reply({ embeds: [mainEmbed] });
+                return;
               }
       
         
@@ -184,96 +232,6 @@ if (command.permissions) {
     } catch (error) {
       console.error(error);
       message.reply({ embeds: [{ color: config.color, description: `An error occured while processing \`${commandName}\`!\n> Kindly report this issue on the [**support server**](https://discord.gg/bland).` }] });
-    }
-    
-  });
-  client.on('messageUpdate', (oldMessage, newMessage) => {
-
-    const prefix = db.get(`prefix_${newMessage.guild.id}`) || default_prefix;
-
-    if (!newMessage.content.startsWith(prefix) || newMessage.author.bot) return;
-  
-    const args = newMessage.content.slice(prefix.length).trim().split(/ +/);
-    const commandName = args.shift().toLowerCase();
-  
-    if (!cooldowns.has(commandName)) {
-      cooldowns.set(commandName, new Map());
-    }
-  
-    const now = Date.now();
-    const timestamps = cooldowns.get(commandName);
-    const cooldownAmount = 2500;
-  
-    if (timestamps.has(newMessage.author.id)) {
-      const expirationTime = timestamps.get(newMessage.author.id) + cooldownAmount;
-  
-      if (now < expirationTime) {
-        return;
-      }
-    }
-  
-    timestamps.set(newMessage.author.id, now);
-    setTimeout(() => timestamps.delete(newMessage.author.id), cooldownAmount);
-  
-    // Continue with checking if the command exists
-    const command = client.commands.get(commandName);
-  
-    if (!command) {
-      ctx.warn(`No Command called "${commandName}" not found!`);
-      return;
-    }
-  
-  
-
-if (command.permissions) {
-  const requiredPermissions = command.permissions;
-  const hasPermission = newMessage.member && newMessage.member.permissions.has(PermissionsBitField.Flags[requiredPermissions]);
-  if (!hasPermission) {
-    ctx.warn(`You lack \`${requiredPermissions.join(', ')}\` permission to execute \`${commandName}\`!`);
-    return;
-  }
-}
-
-        const parameters = Array.isArray(command.parameters) && command.parameters.length > 0
-?       command.parameters.join(', ').replace(/`/g, ''): 'N/A';      
-        const aliases = command.aliases && command.aliases.length > 0 ? command.aliases.map(alias => `${alias}`).join(', ') : '\`N/A\`';
-        const usage = command.usage || 'N/A';
-        const module = command.category || 'Uncategorized';
-
-        if (args.length === 0) {
-          if (newMessage.attachments.size === 0) {
-            const embed = new EmbedBuilder()
-            .setTitle(`Command: ${command.name} (${aliases})`)
-            .setAuthor({ name: `${module}`, iconURL: client.user.displayAvatarURL({ dynamic: true })})
-            .setDescription(`${command.description}`)
-            .setFooter({ text: `Module: ${module}`, iconURL: newMessage.author.displayAvatarURL({ dynamic: true }) })
-            .addFields(
-              { name: 'usage', value: `>>> \`\`\`bf\nSyntax ,${command.name} ${usage}\`\`\``}
-            )
-            .setFooter({ text: `Module: ${module}`, iconURL: newMessage.author.displayAvatarURL({ dynamic: true }) })
-            .setTimestamp()
-            .setColor(config.color);          
-        
-            if (command.subcommands && command.subcommands.length > 0) {
-              embed.addFields({ name: 'Subcommands', value: `>>> ${command.subcommands.replace(/`/g, '')}`});
-            }
-        
-            if (command.send === false) {
-              command.execute(newMessage, args);
-              return;
-            }
-            
-            return newMessage.reply({ embeds: [embed] });
-               
-          }
-        }        
-    try {
-      const timestamp = new Date().toISOString().replace(/T/, ' ').replace(/\..+/, ''); // Get current timestamp
-      console.log(`[${timestamp}] ${newMessage.author.tag} executed command: ${commandName}`);
-      command.execute(newMessage, args);
-    } catch (error) {
-      console.error(error);
-      newMessage.reply({ embeds: [{ color: config.color, description: `An error occured while processing \`${commandName}\`!\n> Kindly report this issue on the [**support server**](https://discord.gg/bland).` }] });
     }
     
   });

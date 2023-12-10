@@ -22,7 +22,7 @@ module.exports = {
     }
 
     const options = {
-      method: 'GET',
+      method: 'POST',
       url: 'https://shazam-api6.p.rapidapi.com/shazam/recognize/',
       params: { url: audioUrl },
       headers: {

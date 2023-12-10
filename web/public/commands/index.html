@@ -260,18 +260,21 @@ return false; // Prevent the default context menu
             <div class="Information">
                 <h1>ㅤInformation</h1>
                 
-                      <p class="command-item" onclick="toggleCommandInfo('botinfo')">
-                          <span>botinfo</span> Display information about the bot
-                      </p>
-                  
-
                       <p class="command-item" onclick="toggleCommandInfo('avatar')">
                           <span>avatar</span> Show user's avatar
                       </p>
                   
 
-                      <p class="command-item" onclick="toggleCommandInfo('banner')">
-                          <span>banner</span> Show user's banner
+                      <p class="command-item" onclick="toggleCommandInfo('userbanner')">
+                          <span>userbanner</span> Get user banner
+                      </p>
+                      <div id="userbanner-info" style="display: none;">
+                          <p>ㅤㅤㅤㅤUsage: userbanner (member)</p>
+                      </div>
+                  
+
+                      <p class="command-item" onclick="toggleCommandInfo('about')">
+                          <span>about</span> Show system information about bland.
                       </p>
                   
 
@@ -283,6 +286,14 @@ return false; // Prevent the default context menu
                       <p class="command-item" onclick="toggleCommandInfo('help')">
                           <span>help</span> Display a list of available commands
                       </p>
+                  
+
+                      <p class="command-item" onclick="toggleCommandInfo('level')">
+                          <span>level</span> Check your current level, XP, and progress towards the next level
+                      </p>
+                      <div id="level-info" style="display: none;">
+                          <p>ㅤㅤㅤㅤUsage: level (user mention, optional)</p>
+                      </div>
                   
 
                       <p class="command-item" onclick="toggleCommandInfo('lyrics')">
@@ -312,9 +323,12 @@ return false; // Prevent the default context menu
             <div class="Miscellaneous">
                 <h1>ㅤMiscellaneous</h1>
                 
-                      <p class="command-item" onclick="toggleCommandInfo('dictionary')">
-                          <span>dictionary</span> Show the definition of a word
+                      <p class="command-item" onclick="toggleCommandInfo('afk')">
+                          <span>afk</span> Set an AFK status for when you are mentioned
                       </p>
+                      <div id="afk-info" style="display: none;">
+                          <p>ㅤㅤㅤㅤUsage: afk afk</p>
+                      </div>
                   
 
                       <p class="command-item" onclick="toggleCommandInfo('emojify')">
@@ -341,11 +355,27 @@ return false; // Prevent the default context menu
                       </div>
                   
 
+                      <p class="command-item" onclick="toggleCommandInfo('imagegen')">
+                          <span>imagegen</span> See a hot image from wallhaven
+                      </p>
+                      <div id="imagegen-info" style="display: none;">
+                          <p>ㅤㅤㅤㅤUsage: imagegen &lt;search query&gt;</p>
+                      </div>
+                  
+
                       <p class="command-item" onclick="toggleCommandInfo('instagram')">
                           <span>instagram</span> Get information on an Instagram account
                       </p>
                       <div id="instagram-info" style="display: none;">
                           <p>ㅤㅤㅤㅤUsage: instagram (username)</p>
+                      </div>
+                  
+
+                      <p class="command-item" onclick="toggleCommandInfo('language')">
+                          <span>language*</span> Set the main language for the bot
+                      </p>
+                      <div id="language-info" style="display: none;">
+                          <p>ㅤㅤㅤㅤUsage: language &lt;subcommand&gt; &lt;language&gt;</p>
                       </div>
                   
 
@@ -357,11 +387,27 @@ return false; // Prevent the default context menu
                       </div>
                   
 
+                      <p class="command-item" onclick="toggleCommandInfo('removebackground')">
+                          <span>removebackground</span> Remove the background from an image
+                      </p>
+                      <div id="removebackground-info" style="display: none;">
+                          <p>ㅤㅤㅤㅤUsage: removebackground &lt;image&gt;</p>
+                      </div>
+                  
+
                       <p class="command-item" onclick="toggleCommandInfo('screenshot')">
                           <span>screenshot</span> Takes a screenshot of a website
                       </p>
                       <div id="screenshot-info" style="display: none;">
                           <p>ㅤㅤㅤㅤUsage: screenshot (website) &lt;delay in seconds&gt;</p>
+                      </div>
+                  
+
+                      <p class="command-item" onclick="toggleCommandInfo('shazam')">
+                          <span>shazam</span> Recognize a song using Shazam
+                      </p>
+                      <div id="shazam-info" style="display: none;">
+                          <p>ㅤㅤㅤㅤUsage: shazam (url or attach an audio file)</p>
                       </div>
                   
 
@@ -403,19 +449,16 @@ return false; // Prevent the default context menu
             <div class="Moderation">
                 <h1>ㅤModeration</h1>
                 
-                      <p class="command-item" onclick="toggleCommandInfo('ban')">
-                          <span>ban</span> Ban a user
+                      <p class="command-item" onclick="toggleCommandInfo('lock')">
+                          <span>lock</span> Locks the mentioned channel or the current channel
                       </p>
-                      <div id="ban-info" style="display: none;">
-                          <p>ㅤㅤㅤㅤUsage: ban (member) &lt;reason&gt;</p>
-                      </div>
                   
 
-                      <p class="command-item" onclick="toggleCommandInfo('kick')">
-                          <span>kick</span> Kick a user
+                      <p class="command-item" onclick="toggleCommandInfo('moderate')">
+                          <span>moderate</span> Open a moderation panel for banning or kicking a user
                       </p>
-                      <div id="kick-info" style="display: none;">
-                          <p>ㅤㅤㅤㅤUsage: kick (member) &lt;reason&gt;</p>
+                      <div id="moderate-info" style="display: none;">
+                          <p>ㅤㅤㅤㅤUsage: moderate @curly</p>
                       </div>
                   
 
@@ -443,11 +486,73 @@ return false; // Prevent the default context menu
                       </div>
                   
 
+                      <p class="command-item" onclick="toggleCommandInfo('unlock')">
+                          <span>unlock</span> Unlock the channel to prevent messages from being sent
+                      </p>
+                  
+
                       <p class="command-item" onclick="toggleCommandInfo('untimeout')">
                           <span>untimeout</span> Untimeout a user
                       </p>
                       <div id="untimeout-info" style="display: none;">
                           <p>ㅤㅤㅤㅤUsage: untimeout (member)</p>
+                      </div>
+                  
+            </div>
+            <br>   
+            
+
+            <div class="Music">
+                <h1>ㅤMusic</h1>
+                
+                      <p class="command-item" onclick="toggleCommandInfo('pause')">
+                          <span>pause</span> Pause the currently playing song.
+                      </p>
+                  
+
+                      <p class="command-item" onclick="toggleCommandInfo('play')">
+                          <span>play</span> Play a song.
+                      </p>
+                      <div id="play-info" style="display: none;">
+                          <p>ㅤㅤㅤㅤUsage: play (query)</p>
+                      </div>
+                  
+
+                      <p class="command-item" onclick="toggleCommandInfo('queue')">
+                          <span>queue</span> Show the current queue.
+                      </p>
+                  
+
+                      <p class="command-item" onclick="toggleCommandInfo('repeat')">
+                          <span>repeat</span> Toggle repeat mode for the queue.
+                      </p>
+                  
+
+                      <p class="command-item" onclick="toggleCommandInfo('resume')">
+                          <span>resume</span> Resume the paused song.
+                      </p>
+                  
+
+                      <p class="command-item" onclick="toggleCommandInfo('shuffle')">
+                          <span>shuffle</span> Shuffle the songs in the queue.
+                      </p>
+                  
+
+                      <p class="command-item" onclick="toggleCommandInfo('skip')">
+                          <span>skip</span> Skip one or more songs in the queue.
+                      </p>
+                  
+
+                      <p class="command-item" onclick="toggleCommandInfo('leave')">
+                          <span>leave</span> Stop playing music.
+                      </p>
+                  
+
+                      <p class="command-item" onclick="toggleCommandInfo('volume')">
+                          <span>volume</span> Adjust the volume of the music.
+                      </p>
+                      <div id="volume-info" style="display: none;">
+                          <p>ㅤㅤㅤㅤUsage: volume 9volume)</p>
                       </div>
                   
             </div>
@@ -462,6 +567,14 @@ return false; // Prevent the default context menu
                       </p>
                       <div id="antibot-info" style="display: none;">
                           <p>ㅤㅤㅤㅤUsage: antibot (subcommand)</p>
+                      </div>
+                  
+
+                      <p class="command-item" onclick="toggleCommandInfo('leveling')">
+                          <span>leveling*</span> Enable or disable the leveling system
+                      </p>
+                      <div id="leveling-info" style="display: none;">
+                          <p>ㅤㅤㅤㅤUsage: leveling (subcommand)</p>
                       </div>
                   
 
