@@ -6,7 +6,7 @@ module.exports = {
   description: "Adjust the volume of the music.",
   usage: "9volume)",
   send: false,
-  async execute(message, args) {
+  async execute(message, args, client) {
     const { member, guild, channel } = message;
 
     const embed = new EmbedBuilder();

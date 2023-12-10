@@ -16,7 +16,6 @@ const client = new Client({
     return GatewayIntentBits[a]
   }),
 });
-module.exports = client; 
 const activeBans = new Map();
 client.activeBans = new Map();
 client.commands = new Map();
@@ -171,92 +170,4 @@ client.on('messageCreate', (message) => {
   db.set(`level_${message.guild.id}_${message.author.id}`, userLevel);
   db.set(`xp_${message.guild.id}_${message.author.id}`, userXP);
 });
-
-
-const { DisTube } = require("distube");
-
-const { SpotifyPlugin } = require('@distube/spotify');
-const { SoundCloudPlugin } = require('@distube/soundcloud');
-const { YtDlpPlugin } = require('@distube/yt-dlp');
-
-
-client.distube = new DisTube(client, {
-  emitNewSongOnly: true,
-  leaveOnFinish: true,
-  emitAddSongWhenCreatingQueue: false,
-  plugins: [new SpotifyPlugin()]
-});
-const { ButtonBuilder, ActionRowBuilder, SlashCommandBuilder, ButtonStyle } = require("discord.js");
-
-const { musicCard } = require("musicard");
-
-const status = (queue) =>
-  `Volume: \`${queue.volume}%\` | Filter: \`${queue.filters.names.join(", ") || "Off"}\` | Loop: \`${queue.repeatMode ? (queue.repeatMode === 2 ? "All Queue" : "This Song") : "Off"}\` | Autoplay: \`${queue.autoplay ? "On" : "Off"}\``;
-
-async function sendMusicCard(queue, song) {
-
-  const card = new musicCard()
-    .setName(song.name)
-    .setAuthor(`${song.user.username}'s request`)
-    .setColor("auto")
-    .setTheme("classic")
-    .setBrightness(50)
-    .setThumbnail(song.thumbnail)
-    .setProgress(10)
-    .setStartTime("0:01")
-    .setEndTime(song.formattedDuration);
-  const cardBuffer = await card.build();
-  fs.writeFileSync(`musicard.png`, cardBuffer);
-
-  const repeat = new ButtonBuilder()
-    .setCustomId("repeat")
-    .setLabel("Repeat")
-    .setStyle(ButtonStyle.Danger);
-
-  const shuffle = new ButtonBuilder()
-    .setCustomId("shuffle")
-    .setLabel("Shuffle")
-    .setStyle(ButtonStyle.Danger);
-
-    const embed22 = new EmbedBuilder()
-    .setColor(config.color)
-    .setImage('attachment://musicard.png');  // Use 'attachment://' protocol for local files
-  
-  queue.textChannel.send({
-    files: [{ attachment: 'musicard.png', name: 'musicard.png' }],  // Provide the file as an attachment
-  }).then((message) => {
-    queue.currentMessage = message;
-  });
-}
-
-client.distube
-  .on('playSong', async (queue, song) => {
-    if (queue.currentMessage) {
-      queue.currentMessage.delete().catch(console.error);
-      queue.currentMessage = undefined;
-    }
-
-    await sendMusicCard(queue, song);
-  })
-  .on('addSong', (queue, song) => {
-    queue.textChannel.send({ embeds: [{ color: config.color, description: `> Added ${song.name} - \`${song.formattedDuration}\` to the queue` }] });
-  })
-  .on('addList', (queue, playlist) => {
-    queue.textChannel.send({ embeds: [{ color: config.color, description: `> Added \`${playlist.name}\` (${playlist.songs.length} songs) to queue\n${status(queue)}` }] });
-  })
-  .on('error', (channel, e) => {
-    console.error(e);
-  })
-  .on('empty', (channel) => {
-    channel.send({ embeds: [{ color: config.color, description: `> Voice channel is empty! Goodbye...` }] });
-  })
-  .on('searchNoResult', (message, query) => {
-    message.channel.send({ embeds: [{ color: config.color, description: `> No result found for \`${query}\`!` }] });
-  })
-  .on('finish', (queue) => {
-    queue.textChannel.send({ embeds: [{ color: config.color, description: `> Queue ended!`}]}).then((message) => {
-      queue.currentMessage = message;
-    });
-    queue.connection.disconnect();
-  });
 client.login(token);
