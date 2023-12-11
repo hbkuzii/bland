@@ -3,6 +3,7 @@ const chalk = require('chalk');
 const mongoose = require('mongoose');
 const { token, color, default_prefix } = require("./config.json");
 const config = require("./config.json");
+const eventHandler = require('./Structures/event.js');
 const commandHandler = require('./Structures/bot.js');
 const fs = require("fs");
 const axios = require('axios'); // Make sure to install axios using npm install axios
@@ -23,23 +24,8 @@ client.activeBans = new Map();
 client.commands = new Map();
 client.db = require("quick.db");
 
-client.once('ready', () => {
-  const timestamp = new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '');
-  console.log(
-    `${chalk.gray.bold(`[${timestamp}]`)}${chalk.gray.cyan.bold(` INFO`)}${chalk.magentaBright.bold` [bland]`}` +
-    `${chalk.white.bold(` Logged in as ${client.user.tag} with ${client.commands.size} commands`)}`
-  );
-
-  client.user.setPresence({
-    status: 'dnd',
-    activities: {
-      type: ActivityType.Custom,
-      name: 'bland status',
-      state: 'bland.world/commands'
-     }})
-});
 commandHandler(client);
-
+eventHandler(client);
 process.on('unhandledRejection', error => {
   console.error('Unhandled promise rejection:', error);
 });
