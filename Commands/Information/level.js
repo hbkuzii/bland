@@ -1,6 +1,7 @@
 const { charToHex } = require('discord-emojis-parser');
 const db = require('quick.db');
 const { EmbedBuilder } = require('discord.js');
+const Discord = require('discord.js');
 const config = require('../../config.json');
 
 module.exports = {
@@ -68,18 +69,13 @@ function generateProgressBar(progress, totalBars, emptyBarChar, filledBarChar) {
 async function displayLeaderboard(message) {
   try {
     const allUsers = message.guild.members.cache.map(member => {
-      const level = db.get(`level_${member.user.id}`) || 1;
-      const xp = db.get(`xp_${member.user.id}`) || 0;
-      return { id: member.user.id, level, xp };
+      const userLevel = db.get(`level_${message.guild.id}_${member.user.id}`) || 1;
+      const userXP = db.get(`xp_${message.guild.id}_${member.user.id}`) || 0;
+      return { id: member.user.id, level: userLevel, xp: userXP };
     });
 
-    const sortedUsers = allUsers.sort((a, b) => {
-      if (a.level !== b.level) {
-        return b.level - a.level; // Sort by level in descending order
-      } else {
-        return b.xp - a.xp; // If levels are equal, sort by XP in descending order
-      }
-    });
+    const sortedUsers = allUsers.sort((a, b) => a.xp - b.xp).reverse(); // Sort by XP in descending order
+
 
     const chunkSize = 10;
     const leaderboardList = sortedUsers.map((user, index) => `${index + 1}. ${message.guild.members.cache.get(user.id).user.username} - Level ${user.level} | XP: ${user.xp}`);
@@ -95,20 +91,20 @@ async function displayLeaderboard(message) {
           name: message.guild.name,
           iconURL: message.guild.iconURL({ dynamic: true }),
         },
-        title: `Level Leaderboard - Page ${index + 1}/${chunkedLeaderboardList.length}`,
+        title: `Experience Leaderboard - Page ${index + 1}/${chunkedLeaderboardList.length}`,
         description: chunk.join('\n'),
-        footer: { context: 'Leaderboard' },
+        footer: { text: 'Leaderboard' }, // 'context' was replaced with 'text'
       }).setColor(config.color)
     ));
 
     await new paginatorInstance(
       message, {
         embeds,
-        text: `{context} ∙ Page {page} of {pages}`,
+        text: `Leaderboard ∙ Page {page} of {pages}`, // 'context' was replaced with 'text'
       }
     ).construct();
   } catch (error) {
     console.error(error);
-    ctx.error();
+    //ctx.error()
   }
 }

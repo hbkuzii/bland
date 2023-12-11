@@ -265,11 +265,11 @@ return false; // Prevent the default context menu
                       </p>
                   
 
-                      <p class="command-item" onclick="toggleCommandInfo('userbanner')">
-                          <span>userbanner</span> Get user banner
+                      <p class="command-item" onclick="toggleCommandInfo('banner')">
+                          <span>banner</span> Display a members banner
                       </p>
-                      <div id="userbanner-info" style="display: none;">
-                          <p>ㅤㅤㅤㅤUsage: userbanner (member)</p>
+                      <div id="banner-info" style="display: none;">
+                          <p>ㅤㅤㅤㅤUsage: banner &lt;member&gt;</p>
                       </div>
                   
 
@@ -336,6 +336,14 @@ return false; // Prevent the default context menu
                       </p>
                       <div id="emojify-info" style="display: none;">
                           <p>ㅤㅤㅤㅤUsage: emojify (text)</p>
+                      </div>
+                  
+
+                      <p class="command-item" onclick="toggleCommandInfo('feedback')">
+                          <span>feedback</span> Provide feedback on the bot
+                      </p>
+                      <div id="feedback-info" style="display: none;">
+                          <p>ㅤㅤㅤㅤUsage: feedback (feedback message)</p>
                       </div>
                   
 
@@ -496,63 +504,6 @@ return false; // Prevent the default context menu
                       </p>
                       <div id="untimeout-info" style="display: none;">
                           <p>ㅤㅤㅤㅤUsage: untimeout (member)</p>
-                      </div>
-                  
-            </div>
-            <br>   
-            
-
-            <div class="Music">
-                <h1>ㅤMusic</h1>
-                
-                      <p class="command-item" onclick="toggleCommandInfo('pause')">
-                          <span>pause</span> Pause the currently playing song.
-                      </p>
-                  
-
-                      <p class="command-item" onclick="toggleCommandInfo('play')">
-                          <span>play</span> Play a song.
-                      </p>
-                      <div id="play-info" style="display: none;">
-                          <p>ㅤㅤㅤㅤUsage: play (query)</p>
-                      </div>
-                  
-
-                      <p class="command-item" onclick="toggleCommandInfo('queue')">
-                          <span>queue</span> Show the current queue.
-                      </p>
-                  
-
-                      <p class="command-item" onclick="toggleCommandInfo('repeat')">
-                          <span>repeat</span> Toggle repeat mode for the queue.
-                      </p>
-                  
-
-                      <p class="command-item" onclick="toggleCommandInfo('resume')">
-                          <span>resume</span> Resume the paused song.
-                      </p>
-                  
-
-                      <p class="command-item" onclick="toggleCommandInfo('shuffle')">
-                          <span>shuffle</span> Shuffle the songs in the queue.
-                      </p>
-                  
-
-                      <p class="command-item" onclick="toggleCommandInfo('skip')">
-                          <span>skip</span> Skip one or more songs in the queue.
-                      </p>
-                  
-
-                      <p class="command-item" onclick="toggleCommandInfo('leave')">
-                          <span>leave</span> Stop playing music.
-                      </p>
-                  
-
-                      <p class="command-item" onclick="toggleCommandInfo('volume')">
-                          <span>volume</span> Adjust the volume of the music.
-                      </p>
-                      <div id="volume-info" style="display: none;">
-                          <p>ㅤㅤㅤㅤUsage: volume 9volume)</p>
                       </div>
                   
             </div>

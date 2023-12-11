@@ -10,7 +10,9 @@ const { openaiApiKey } = require("./config.json");
 const path = require("path")
 const moment = require("moment")
 const db = require("quick.db");
+const Erela = require('erela.js')
 const { charToHex } = require('discord-emojis-parser');
+const Spotify = require('erela.js-spotify');
 const client = new Client({
   intents: Object.keys(GatewayIntentBits).map((a)=>{
     return GatewayIntentBits[a]
