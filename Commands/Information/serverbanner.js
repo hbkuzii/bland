@@ -4,7 +4,7 @@ const config = require("../../config.json")
 module.exports = {
   name: "serverbanner",
   aliases: ["sb", "sbanner"],
-  category: "information",
+  category: 'Information',
   description: 'Get the server banner',
   send: false,
   permissions: ['SendMessages'],

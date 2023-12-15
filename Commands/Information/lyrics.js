@@ -9,7 +9,7 @@ module.exports ={
     description: 'Search for lyrics of a song',
     usage: '<song>',
     permissions: ['SendMessages'],
-    category: "Miscellaneous",
+    category: 'Information',
     async execute(message, args, client) {
         const songName = args.join(' ');
 

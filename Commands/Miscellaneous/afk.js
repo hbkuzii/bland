@@ -4,7 +4,7 @@ const Discord = require('discord.js');
 module.exports = {
     description: 'Set an AFK status for when you are mentioned',
     name: 'afk',
-    category: "utility",
+    category: "Miscellaneous",
     usage: "afk",
     send: false,
     execute(message, args, client) {

@@ -9,7 +9,6 @@ module.exports = {
     permissions: ["SendMessages"],
     send: false,
     parameters: ['\`language\`'],
-    category: 'Settings',
     subcommands: [
         {
             name: 'language set',
@@ -19,6 +18,7 @@ module.exports = {
             example: 'set english',
         },
     ],
+    category: "Miscellaneous",
     execute(message, args, client) {
         message.channel.sendTyping();
 

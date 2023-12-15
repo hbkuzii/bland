@@ -5,10 +5,9 @@ const config = require('../../config.json');
 module.exports = {
     name: 'weather',
     description: 'Get the current weather for a location',
-    category: 'Miscellaneous',
+    category: 'Information',
     usage : '(city)',
     example : 'Toronto',
-    category : 'Miscellaneous',
     permissions: ['SendMessages'],
     async execute(message, args, client) {
 

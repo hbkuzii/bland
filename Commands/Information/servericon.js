@@ -4,7 +4,7 @@ const config = require("../../config.json")
 module.exports = {
   name: "servericon",
   aliases: ["sicon", "guildbanner"],
-  category: "information",
+  category: 'Information',
   description: 'Get the server banner',
   send: false,
   permissions: ['SendMessages'],

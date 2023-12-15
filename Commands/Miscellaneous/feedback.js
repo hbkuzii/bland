@@ -8,7 +8,7 @@ module.exports = {
   name: 'feedback',
   description: 'Provide feedback on the bot',
   usage: '(feedback message)',
-  category: 'Miscellaneous',
+  category: "Miscellaneous",
   parameters: ['`feedback message`'],
   permissions: ['SendMessages'],
   cooldown: 3600, // Cooldown time in seconds (1 hour)

@@ -5,7 +5,7 @@ const { charToHex } = require('discord-emojis-parser');
 module.exports = {
     name: 'emojilist',
     description: 'List all emojis in the server',
-    category: 'Miscellaneous',
+    category: 'Information',
     permissions: ['SendMessages'],
     send: false,
     async execute(message, args, client) {

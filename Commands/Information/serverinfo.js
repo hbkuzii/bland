@@ -7,7 +7,7 @@ const config = require("../../config.json");
 module.exports = {
   name: "serverinfo",
   aliases: ["si", "guildinfo", "ginfo", "gi"],
-  category: "information",
+  category: 'Information',
   description: 'View information about a server',
   send: false,
   permissions: ['SendMessages'],

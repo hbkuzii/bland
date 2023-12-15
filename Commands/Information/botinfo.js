@@ -7,7 +7,7 @@ module.exports = {
         description : 'Show system information about bland.',
         send: false,
         aliases : [ 'botinfo', 'system', 'sys', 'bi' ],
-        module : 'Information',
+        category: 'Information',
 
     async execute(message, args, client) {
         try {

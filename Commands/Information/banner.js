@@ -7,6 +7,7 @@ module.exports = {
    description: 'Display a members banner',
    usage: '<member>',
    send: false,
+   category: 'Information',
     async execute(message, args, client) {
       
       message.channel.sendTyping()

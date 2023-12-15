@@ -8,7 +8,7 @@ module.exports = {
   name: "level",
   description: "Check your current level, XP, and progress towards the next level",
   usage: "(user mention, optional)",
-  category: 'Users',
+  category: 'Information',
   send: false,
   execute(message, args, client) {
     message.channel.sendTyping();
