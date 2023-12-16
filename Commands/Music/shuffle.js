@@ -8,7 +8,7 @@ module.exports = {
   permissions: ['SendMessages'],
   send: false,
   async execute(message, args, client) {
-    const { guild, channel } = message;
+    const { guild, channel, member } = message;
     const embed = new EmbedBuilder();
 
     const queue = client.distube.getQueue(guild.id);
@@ -26,7 +26,7 @@ module.exports = {
       return ctx.warn("Not enough songs in the queue to shuffle.");
     } else {
       client.distube.shuffle(guild.id);
-      ("🔀 Queue shuffled.");
+      ctx.embed("🔀 Queue shuffled.");
     }
   }
 };

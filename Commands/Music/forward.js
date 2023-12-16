@@ -19,7 +19,7 @@ module.exports = {
         }
 
         if (!queue) {
-            return message.channel.send('There is no music playing right now!');
+            return ctx.warn('There is no music playing right now!');
           }
         const time = parseInt(args[0]); 
         if (isNaN(time) || time < 0) {

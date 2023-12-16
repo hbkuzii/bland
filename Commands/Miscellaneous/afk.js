@@ -5,7 +5,7 @@ module.exports = {
     description: 'Set an AFK status for when you are mentioned',
     name: 'afk',
     category: "Miscellaneous",
-    usage: "afk",
+    usage: "(reason)",
     send: false,
     execute(message, args, client) {
         const content = args.join(" ") ? args.join(' ') : "AFK";

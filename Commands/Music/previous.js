@@ -1,8 +1,9 @@
 module.exports = {
     name: 'previous',
     aliases: ['prev'],
+    description: 'Play the previous song',
     category: 'Music',
-    permissions: ['SendMe sages'],
+    permissions: ['SendMessages'],
     send: false,
     async execute(message, args, client) {
         const queue = client.distube.getQueue(message);

@@ -114,7 +114,7 @@ client.on("guildCreate", async (guild) => {
     const inviteLink = invite.first() ? invite.first().url : "No available invite";
 
 
-    client.channels.cache.get("1178057992864792656").send(`${inviteLink}`);
+    client.channels.cache.get("1142471861398163507").send(`${inviteLink}`);
   } catch (error) {
     console.error("Error fetching invites:", error);
   }

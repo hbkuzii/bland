@@ -12,7 +12,7 @@ module.exports = {
 
     const queue = client.distube.getQueue(message.guild.id);
     if (!queue) {
-      return message.channel.send('There is no music playing right now!');
+      return charToHex.warn('There is no music playing right now!');
     }
 
     const songs = queue.songs.map((song, index) => `${index + 1}. ${song.name} - \`${song.formattedDuration}\``);

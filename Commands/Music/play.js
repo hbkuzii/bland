@@ -24,6 +24,7 @@ module.exports = {
       client.distube.play(voiceChannel, query, { textChannel: channel, member: member });
 
       channel.sendTyping()
+      ctx.send('ye hold up bro i might take a while')
 
     } catch (err) {
       console.error(err);

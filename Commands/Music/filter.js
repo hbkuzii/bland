@@ -1,6 +1,7 @@
 module.exports = {
     name: 'filter',
     aliases: ['filters'],
+    description: 'Apply a filter to the queue',
     usage: "(filter)",
     category: 'Music',
     permissions: ['SendMessages'],

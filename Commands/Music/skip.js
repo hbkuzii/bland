@@ -7,7 +7,7 @@ module.exports = {
     description: "Skip one or more songs in the queue.",
     category: 'Music',
     permissions: ['SendMessages'],
-    async execute(message, args) {
+    async execute(message, args, client) {
         const { member, guild, channel } = message;  
       const queue = client.distube.getQueue(message.guildId);
 
