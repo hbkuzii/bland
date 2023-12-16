@@ -1,5 +1,6 @@
 module.exports = {
     name: 'rewind',
+    description: "Seek rewind in the queue.",
     permissions: ['SendMessages'],
     category: 'Music',
     send: false,

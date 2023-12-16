@@ -1,19 +1,26 @@
-const { MessageAttachment } = require('discord.js');
 
 module.exports = {
     name: 'botav',
-    description: 'Get the avatar of the bot',
+    description: 'Change the bot\'s avatar',
     ownerOnly: true,
-    send: false,
     category: "Developer",
     async execute(message, args, client) {
         // Check if the user executing the command is the owner
         if (message.author.id === '1068177499231621270') {
-            const botAvatar = client.user.displayAvatarURL({ format: 'png', dynamic: true, size: 1024 });
+            try {
+                let avatarURL = args[0];
 
-            // Send the bot's avatar as an attachment
-            const attachment = new MessageAttachment(botAvatar, 'bot_avatar.png');
-            message.channel.send(attachment);
+                // Check if an attachment is present
+                if (message.attachments.size > 0) {
+                    avatarURL = message.attachments.first().url;
+                }
+
+                await client.user.setAvatar(avatarURL);
+                message.react('✅');
+            } catch (error) {
+                console.error(error);
+                return message.react('‼️');
+            }
         }
     }
 };
