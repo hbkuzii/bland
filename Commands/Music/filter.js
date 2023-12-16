@@ -4,6 +4,7 @@ module.exports = {
     usage: "(filter)",
     category: 'Music',
     permissions: ['SendMessages'],
+    send: false,
     async execute(message, args, client) {
         const queue = client.distube.getQueue(message);
         if (!queue) return ctx.warn(`There is nothing in the queue right now!`);

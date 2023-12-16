@@ -6,6 +6,7 @@ module.exports = {
   description: "Shuffle the songs in the queue.",
   category: 'Music',
   permissions: ['SendMessages'],
+  send: false,
   async execute(message, args, client) {
     const { guild, channel } = message;
     const embed = new EmbedBuilder();

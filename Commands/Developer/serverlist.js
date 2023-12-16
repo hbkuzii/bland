@@ -4,7 +4,7 @@ const config = require('../../config.json');
 module.exports = {
     name: 'serverlist',
     description: 'List all servers the bot is in',
-    category: 'Miscellaneous',
+    category: 'Developer',
     permissions: ['SendMessages'],
     send: false,
     async execute(message, args, client) {

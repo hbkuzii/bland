@@ -68,8 +68,7 @@ const randompfp = async () => {
         .setAuthor({ name: 'Follow Our Pinterest', iconURL: 'https://images-ext-1.discordapp.net/external/patbltTGq126PE_DJ-ZVbxORqhW8cipRzo95lYr6FaE/%3Fsize%3D240%26quality%3Dlossless/https/cdn.discordapp.com/emojis/1026647994390552666.webp', url: 'https://www.pinterest.com/antibanners/'})
         .setColor("2B2D31")
         .setImage(randomUrl)
-        .setTimestamp();
-
+        .setTimestamp()
       channel.send({ embeds: [embed] });
     } catch (e) {
       console.error(`Error sending pfp to guild ${guild.name}`, e);
@@ -238,6 +237,7 @@ client.distube
   })
   .on('error', (channel, e) => {
     console.error(e);
+    ctx.error()
   })
   .on('empty', (channel) => {
     channel.send({ embeds: [{ color: config.color, description: `> Voice channel is empty! Goodbye...` }] });
