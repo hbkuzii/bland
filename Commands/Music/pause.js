@@ -6,6 +6,7 @@ module.exports = {
     send: false, 
     category: 'Music',
     description: "Pause the currently playing song.",
+    permissions: ['SendMessages'],
     async execute(message, client) {
         const { member, guild, channel } = message;
         const embed = new EmbedBuilder();

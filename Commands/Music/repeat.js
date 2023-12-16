@@ -6,6 +6,7 @@ module.exports = {
     name: "repeat",
     description: "Toggle repeat mode for the queue.",
     category: 'Music',
+    permissions: ['SendMessages'],
     async execute(message, args, client) {
       const { guild, channel } = message;
       const embed = new EmbedBuilder();
@@ -24,7 +25,7 @@ module.exports = {
       } else {
         const repeatMode = queue.repeatMode;
         client.distube.setRepeatMode(guild.id, repeatMode === 0 ? 1 : 0);
-        ctx.send(`🔁 Repeat mode set to ${repeatMode === 0 ? "queue" : "off"}`);
+        (`🔁 Repeat mode set to ${repeatMode === 0 ? "queue" : "off"}`);
       }
     }
   };

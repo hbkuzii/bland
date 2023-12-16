@@ -6,6 +6,7 @@ module.exports = {
   category: 'Music',
   description: "Play a song.",
   usage: "(query)",
+  permissions: ['SendMessages'],
   async execute(message, args, client) {
     const { member, guild, channel } = message;
     const query = args.join(" ");

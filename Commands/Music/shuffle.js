@@ -5,6 +5,7 @@ module.exports = {
   name: "shuffle",
   description: "Shuffle the songs in the queue.",
   category: 'Music',
+  permissions: ['SendMessages'],
   async execute(message, args, client) {
     const { guild, channel } = message;
     const embed = new EmbedBuilder();
@@ -24,7 +25,7 @@ module.exports = {
       return ctx.warn("Not enough songs in the queue to shuffle.");
     } else {
       client.distube.shuffle(guild.id);
-      ctx.send("🔀 Queue shuffled.");
+      ("🔀 Queue shuffled.");
     }
   }
 };

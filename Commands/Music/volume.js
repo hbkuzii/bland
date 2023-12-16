@@ -7,6 +7,7 @@ module.exports = {
   usage: "(volume)",
   category: 'Music',
   send: false,
+  permissions: ['SendMessages'],
   async execute(message, args, client) {
     const { member, guild, channel } = message;
 

@@ -7,6 +7,7 @@ module.exports = {
     aliases: ['stop', "disconnect"],
     description: "Stop playing music.",
     category: 'Music',
+    permissions: ['SendMessages'],
     async execute(message, args, client) {
       const { guild, channel, member } = message;
       const queue = client.distube.getQueue(message.guildId);
@@ -21,8 +22,7 @@ module.exports = {
       if (!queue) {
         return ctx.warn("There is no active queue.");
       }
-  
-      client.distube.stop(guild);
+      client.distube.voices.leave(message)
   
       message.react("👋");
     }

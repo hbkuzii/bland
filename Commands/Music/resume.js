@@ -6,6 +6,7 @@ module.exports = {
   description: "Resume the paused song.",
   category: 'Music',
   send: false,
+  permissions: ['SendMessages'],
   async execute(message) {
     const { member, guild, channel } = message;
     const embed = new EmbedBuilder();

@@ -248,7 +248,7 @@ client.distube
   .on('finish', (queue) => {
     queue.textChannel.send({ embeds: [{ color: config.color, description: `> Queue ended!`}]}).then((message) => {
       queue.currentMessage = message;
-      queue.connection.disconnect();
+      client.distube.voices.leave(message)
     });
   });
 client.login(token);

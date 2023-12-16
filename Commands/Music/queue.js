@@ -7,6 +7,7 @@ module.exports = {
   send: false,
   description: 'Show the current queue.',
   category: 'Music',
+  permissions: ['SendMessages'],
   async execute(message, args, client) {
 
     const queue = client.distube.getQueue(message.guild.id);
