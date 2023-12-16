@@ -1,4 +1,3 @@
-const { EmbedBuilder } = require("discord.js");
 const { DisTubeError } = require("distube"); // Import the DisTubeError
 
 module.exports = {
@@ -7,10 +6,11 @@ module.exports = {
     category: 'Music',
     description: "Pause the currently playing song.",
     permissions: ['SendMessages'],
-    async execute(message, client) {
-        const { member, guild, channel } = message;
-        const embed = new EmbedBuilder();
-        const queue = client.distube.getQueue(guild);
+    async execute(message, args, client) {
+        const { member, guild } = message;
+        const queue = client.distube.getQueue(message);
+
+        if (!queue) return ctx.warn(`There is nothing in the queue right now!`);
 
         if (!member.voice.channel) {
             return ctx.warn("You must be in a voice channel to execute \`pause\`!");
@@ -26,8 +26,6 @@ module.exports = {
 
         } catch (err) {
             console.log(err);
-
-            // Handle DisTubeError with errorCode 'PAUSED'
             if (err instanceof DisTubeError && err.code === 'PAUSED') {
                 return ctx.warn("The queue has been paused already!");
             }

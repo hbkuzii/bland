@@ -1,5 +1,4 @@
 const { EmbedBuilder } = require("discord.js");
-const client = require("../../bland.js");
 
 module.exports = {
   name: "resume",
@@ -7,9 +6,8 @@ module.exports = {
   category: 'Music',
   send: false,
   permissions: ['SendMessages'],
-  async execute(message) {
+  async execute(message, args, client) {
     const { member, guild, channel } = message;
-    const embed = new EmbedBuilder();
 
     if (!member.voice.channel) {
       return ctx.warn("You must be in a voice channel to execute \`resume\`!");

@@ -79,7 +79,77 @@ const randompfp = async () => {
 setInterval(() => {
   randompfp();
 }, 20 * 1000);
+let isLive = false;
+const twitchClientId = 'gp762nuuoqcoxypju8c569th9wz7q5';
+const twitchAccessToken = 'vnablff955sj6xtziizr0yje00q80q';
+const channelMentionRegex = /<#(\d+)>/;
 
+setInterval(async () => {
+    try {
+        const guilds = client.guilds.cache;
+
+        for (const guild of guilds.values()) {
+            const twitchChannels = db.get(`twitch_${guild.id}`) || [];
+
+            for (const channel of twitchChannels) {
+                try {
+                    const response = await axios.get(`https://api.twitch.tv/helix/streams?user_login=${channel.twitchUser}`, {
+                        headers: {
+                            'Client-ID': twitchClientId,
+                            'Authorization': `Bearer ${twitchAccessToken}`
+                        }
+                    });
+
+                    const stream = response.data.data[0];
+
+                    if (stream) {
+                        if (!channel.isLive) {
+                            channel.isLive = true;
+
+                            const messageContentFromDB = db.get(`twitch_message_${guild.id}_${channel.twitchUser}`) || `${channel.twitchUser} IS LIVE!`;
+
+                            const streamUrl = `https://www.twitch.tv/${channel.twitchUser}`;
+                            const thumbnailWidth = 1920;
+                            const thumbnailHeight = 1080;
+                            const thumbnailUrl = `https://static-cdn.jtvnw.net/previews-ttv/live_user_${channel.twitchUser}-${thumbnailWidth}x${thumbnailHeight}.jpg`;
+
+                            const embed = new EmbedBuilder()
+                                .setTitle(`${stream.title}`)
+                                .setURL(`${streamUrl}`)
+                                .setColor(config.color)
+                                .setImage(`${thumbnailUrl}`)
+
+                            const channelIdMatch = channelMentionRegex.exec(channel.channel);
+                            const channelId = channelIdMatch ? channelIdMatch[1] : null;
+
+                            if (channelId) {
+                                const channelObj = client.channels.cache.get(channelId);
+
+                                if (channelObj) {
+                                    channelObj.send({ content: messageContentFromDB, embeds: [embed] });
+                                } else {
+                                    console.error(`Channel not found for channel ID: ${channelId}`);
+                                }
+                            } else {
+                                console.error(`Invalid channel mention format: ${channel.channel}`);
+                            }
+                        }
+                    } else {
+                        // Check if the channel was previously marked as live
+                        if (channel.isLive) {
+                            channel.isLive = false;
+                        }
+                    }
+                } catch (error) {
+                    console.error('An error occurred while processing a Twitch channel:', error.message);
+                }
+            }
+            db.set(`twitch_${guild.id}`, twitchChannels);
+        }
+    } catch (error) {
+        console.error('An error occurred:', error.message);
+    }
+}, 60000);
 client.on("userUpdate", (oldUser, newUser) => {
   const guilds = client.guilds.cache;
 
@@ -240,10 +310,10 @@ client.distube
     ctx.error()
   })
   .on('empty', (channel) => {
-    channel.send({ embeds: [{ color: config.color, description: `> Voice channel is empty! Goodbye...` }] });
+    queue.textChannel.send({ embeds: [{ color: config.color, description: `> Voice channel is empty! Goodbye...` }] });
   })
   .on('searchNoResult', (message, query) => {
-    message.channel.send({ embeds: [{ color: config.color, description: `> No result found for \`${query}\`!` }] });
+    queue.textChannel.send({ embeds: [{ color: config.color, description: `> No result found for \`${query}\`!` }] });
   })
   .on('finish', (queue) => {
     queue.textChannel.send({ embeds: [{ color: config.color, description: `> Queue ended!`}]}).then((message) => {

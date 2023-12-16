@@ -133,13 +133,28 @@ module.exports = (client) => {
 
     if (command.permissions) {
       const requiredPermissions = command.permissions;
-      const hasAllPermissions = message.member && requiredPermissions.every(permission => message.member.permissions.has(PermissionsBitField.Flags[permission]));
+      
+      // Check if the command requires permissions for members
+      if (message.member) {
+        const hasAllPermissions = requiredPermissions.every(permission => message.member.permissions.has(PermissionsBitField.Flags[permission]));
+      
+        if (!hasAllPermissions) {
+          ctx.warn(`You're missing one or more of the following permissions: \`${requiredPermissions.join('\` ,\`')}\` to execute \`${commandName}\`!`);
+          return;
+        }
+      }
     
-      if (!hasAllPermissions) {
-        ctx.warn(`You're missing one or more of the following permissions: \`${requiredPermissions.join('\` ,\`')}\` to execute \`${commandName}\`!`);
-        return;
+      // Check if the command requires permissions for bots
+      if (message.guild && message.guild.me) {
+        const botMissingPermissions = requiredPermissions.filter(permission => !message.guild.me.permissions.has(PermissionsBitField.Flags[permission]));
+    
+        if (botMissingPermissions.length > 0) {
+          ctx.warn(`I'm missing the following permissions: \`${botMissingPermissions.join('\` ,\`')}\` to execute \`${commandName}\`!`);
+          return;
+        }
       }
     }
+    
     
 
         const parameters = Array.isArray(command.parameters) && command.parameters.length > 0
