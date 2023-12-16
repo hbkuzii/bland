@@ -51,6 +51,7 @@ module.exports = {
           }
         }    
 
+
         const selectMenuOptions = [
           {
             label: 'Home',
@@ -60,18 +61,32 @@ module.exports = {
           },
           ...Object.keys(categories).map(category => ({
             label: category,
-            description: `Click to see ${category} commands`,
+            description: truncateDescription(getCommandsForCategory(category)), // Truncate the description
             value: category.toLowerCase(),
             emoji: getEmojiForCategory(category),
           })),
         ];
+        
+        function truncateDescription(commands) {
+          const maxLength = 100; // Set your desired maximum length
+          if (commands.length > maxLength) {
+            return commands.substring(0, maxLength - 3) + '...';
+          }
+          return commands;
+        }
+        
+        function getCommandsForCategory(category) {
+          const commands = categories[category] || [];
+          return commands.map(command => command.split('`')[1]).join(', ');
+        }
         
         function getEmojiForCategory(category) {
           const emojiMap = {
             'Moderation': '<:moderation:1184257704739479645>',
             'Information': '<:information:1184257165775613972>',
             'Servers': '<:config:1184258470820724786>',
-            'Miscellaneous': '<:miscellaneous:1184259190382927874>'
+            'Miscellaneous': '<:miscellaneous:1184259190382927874>',
+            'Music': '<:music:1185372121057218650>'
           };
         
           return emojiMap[category] || '❓';

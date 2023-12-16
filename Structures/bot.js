@@ -81,7 +81,7 @@ module.exports = (client) => {
               },
               normal: async (content) => {
                   const translatedContent = await translateAndReply(content);
-                  message.reply({ embeds: [{ color: config.color, description: ` ${translatedContent}` }] });
+                  message.reply({ embeds: [{ color: config.color, description: `${translatedContent}` }] });
               },
               error: async (content) => {
                   const translatedContent = await translateAndReply(content);
