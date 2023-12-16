@@ -1,15 +1,16 @@
 module.exports = {
     name: 'rewind',
-    inVoiceChannel: true,
-    run: async (client, message, args) => {
+    permissions: ['SendMessages'],
+    category: 'Music',
+    async execute(message, args, client) {
       const queue = client.distube.getQueue(message)
-      if (!queue) return message.channel.send(`${client.emotes.error} | There is nothing in the queue right now!`)
+      if (!queue) return ctx.warn(`There is nothing in the queue right now!`)
       if (!args[0]) {
-        return message.channel.send(`${client.emotes.error} | Please provide time (in seconds) to go rewind!`)
+        return ctx.warn(` Please provide time (in seconds) to go rewind!`)
       }
       const time = Number(args[0])
-      if (isNaN(time)) return message.channel.send(`${client.emotes.error} | Please enter a valid number!`)
+      if (isNaN(time)) return ctx.warn(`Please enter a valid number!`)
       queue.seek((queue.currentTime - time))
-      message.channel.send(`Rewinded the song for ${time}!`)
+     ctx.approve(`Rewinded the song for ${time}!`)
     }
   }
