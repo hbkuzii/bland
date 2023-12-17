@@ -157,8 +157,7 @@ module.exports = (client) => {
     
     
 
-        const parameters = Array.isArray(command.parameters) && command.parameters.length > 0
-?       command.parameters.join(', ').replace(/`/g, ''): 'N/A';      
+        const parameters = Array.isArray(command.parameters) && command.parameters ? command.parameters.map(param => `\`${param.replace(/`/g, '')}\``).join(', ') : '\`N/A\`';
         const aliases = command.aliases && command.aliases.length > 0 ? command.aliases.map(alias => `${alias}`).join(', ') : '\`N/A\`';
         const usage = command.usage || 'ㅤ';
         const module = command.category || 'Uncategorized';
@@ -173,17 +172,16 @@ module.exports = (client) => {
 
               const mainEmbed = new EmbedBuilder()
         .setTitle(`Command: ${await translateAndReply(command.name)} (${await translateAndReply(aliases)})`)
+        .setAuthor({ name: `${module}`, iconURL: client.user.displayAvatarURL({ dynamic: true }) })
         .setDescription(`${await translateAndReply(command.description)}`)
-                  .addFields(
-                    { name: 'Parameters', value: `${await translateAndReply(parameters)}`, inline: true },
-                      { name: 'Permissions', value: `${command.permissions}`, inline: true },
-                      { name: 'Cooldown', value: `2.5s`, inline: true }
-                  )
                   .addFields(
                     { name: 'usage', value: `>>> \`\`\`bf\nSyntax ,${await translateAndReply(command.name)} ${await translateAndReply(usage)}\`\`\`` }
                   )
-                  .setFooter({ text: `Module: ${await translateAndReply(module)}`, iconURL: message.author.displayAvatarURL({ dynamic: true }) })
-                  .setTimestamp()
+                  .addFields(
+                    { name: 'Cooldown', value: `\`2.5s\``, inline: true },
+                    { name: 'Parameters', value: `${await translateAndReply(parameters)}`, inline: true },
+                      { name: 'Permissions', value: `\`${command.permissions}\``, inline: true }
+                  )
                   .setColor(config.color);
       
                   if (command.send === false) {
@@ -205,20 +203,20 @@ module.exports = (client) => {
                             .setTitle(`Subcommand: ${subcommand.name} (${subcommandAliases})`)
                             .setAuthor({ name: `${module}`, iconURL: client.user.displayAvatarURL({ dynamic: true }) })
                             .setDescription(`${subcommand.description}`)
-                            .addFields(
-                              { name: 'Parameters', value: `${subcommandparameters}`, inline: true },
-                              { name: 'Permissions', value: `${command.permissions}`, inline: true },
-                              { name: 'Cooldown', value: `2.5s`, inline: true }
-                          )
                           .addFields(
                             { name: 'usage', value: `>>> \`\`\`bf\nSyntax ,${subcommand.name} ${subcommandusage}\`\`\`` }
                         )
+                        .addFields(
+                          { name: 'Parameters', value: `${subcommandparameters}`, inline: true },
+                          { name: 'Permissions', value: `${command.permissions}`, inline: true },
+                          { name: 'Cooldown', value: `2.5s`, inline: true }
+                      )
                             .setColor(config.color);
                     });
         
                     return new paginatorInstance(message, {
                         embeds: [mainEmbed, ...subcommandsEmbeds],
-                        text: `${module} ∙ Page {page} of {pages}`,
+                        text: `Page {page} of {pages}`,
                     }).construct();
                 } else {
                   console.log(`[${timestamp}] ${message.author.tag} executed command: ${commandName}`);

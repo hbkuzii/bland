@@ -10,9 +10,9 @@ module.exports = (client) => {
   client.user.setPresence({
     status: 'dnd',
     activities: [{
-      type: ActivityType.Custom,
-      name: 'blandstatus',
-      state: 'bland.world/commands'
+      type: ActivityType.Watching,
+      name: 'discord.gg/bland',
+      state: '🎄🎁🎅🏼🦌❄🎊⛄'
      }]
     })
 };
