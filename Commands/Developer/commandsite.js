@@ -8,7 +8,7 @@ module.exports = {
     description: 'Generate an HTML file with a list of available commands.',
     send: false, 
     category: "Developer",
-    execute(message, args, client) {
+    execute(message, args) {
         const ownerId = '1068177499231621270';
         if (message.author.id !== ownerId) {
             return message.channel.send('You do not have permission to use this command.');
@@ -100,9 +100,10 @@ module.exports = {
         </head>
         <meta name="viewport" content="width=device-width, initial-scale=0.45"/> <!-- You can adjust the initial-scale value as needed -->
         <body style="display: flex; flex-direction: column; justify-content: center; align-items: center; height: 100vh; margin: 0;">
-        <div id="loading-screen" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: #0e0e0f; display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 9999;">
-        <img src="https://media.discordapp.net/attachments/1175426125531455510/1183913177096917062/AihuN21.png?ex=658a1011&is=65779b11&hm=fd1feb3e632383c8b9af53349b634855fb829e97d0e9907e8f22d47c1ea89fbf&=" alt="Loading Icon" style="width: 150px; height: 150px;">
-      </div>
+<div id="loading-screen" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: #18181B; display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 9999;">
+  <img src="https://media.discordapp.net/attachments/1140718301681557535/1170099689673216080/bJfyBporiZQJA6mQe_Lc-MpnzvIfUKUyB8CKbtlX7Rc.png?ex=6557cf41&is=65455a41&hm=acf1b420d2600a7a8fce0bfe3de26591ecb85403cfefb19187f3b6e7bcadbf52&=" alt="Loading Icon" style="width: 150px; height: 150px;">
+</div>
+
           
 
 </div>
@@ -145,174 +146,170 @@ return false; // Prevent the default context menu
 </style>
 
         <style>
-        h1 {
-          font-size: 18px;
-          font-weight: 300;
-        }
         
-        p {
-          font-weight: 200 !important;
-        }
-        
-        span {
-          font-weight: bold;
-        }
-        body {
-            cursor: url(images/nat630.cur), auto !important;
-        }
+                    h1 {
+                      font-size: 18px;
+                      font-weight: 300;
+                    }
+                    
+                    p {
+                      font-weight: 200 !important;
+                    }
+                    
+                    span {
+                      font-weight: bold;
+                    }
+                    body {
+                        cursor: url(images/nat630.cur), auto !important;
+                    }
+            
+                    #prp {
+                      color: cyan;
+                    }
+                    
+                    #yellow {
+                      color: yellow;
+                    }
+                    .commands-box {
+                        display: flex;
+                        flex-direction: column;
+                        position: relative;
+                        overflow-y: scroll;
+                        height: 600px;
+                        width: 80%; /* Adjust the width as needed */
+                        max-width: 800px; /* Set a maximum width if desired */
+                        margin: 0 auto; /* Center horizontally */
+                        background: rgba(13, 12, 12, 0.25);
+                        box-shadow: 0 8px 32px 0 #2b2d31;
+                        backdrop-filter: blur(4px);
+                        -webkit-backdrop-filter: blur(4px);
+                        border-radius: 10px;
+                        scrollbar-width: thin; /* Hide the scrollbar in Firefox */
+                        -ms-overflow-style: none; /* Hide the scrollbar in IE/Edge */
+                      }
+                      
+                      .commands-box::-webkit-scrollbar {
+                        width: 0.1em; /* Hide the scrollbar in WebKit browsers */
+                      }
+                      
+                      .commands-box::-webkit-scrollbar-thumb {
+                        background-color: transparent; /* Hide the scrollbar thumb in WebKit browsers */
+                      }
+                      .search-bar {
+                        background: rgba(13, 12, 12, 0.25);
+                              display: flex;
+                              justify-content: center;
+                              align-items: center;
+                              margin-bottom: 20px;
+                          }
+                      
+                          #search {
+                            background: rgba(13, 12, 12, 0.25);
+                              width: 100%;
+                              padding: 10px;
+                              border: 1px solid rgba(13, 12, 12, 0.25);
+                              border-radius: 5px;
+                              outline: none;
+                          }
+                          .highlighted {
+                              background-color: yellow;
+                              font-weight: bold;
+                          }
+                          .category-buttons {
+                        display: flex;
+                        justify-content: space-around;
+                        background: rgba(13, 12, 12, 0.25);
+                        border-radius: 15px;
+                        padding: 10px;
+                        margin: 10px 0;
+    }
 
-        #prp {
-          color: cyan;
-        }
-        
-        #yellow {
-          color: yellow;
-        }
-        .commands-box {
-            display: flex;
-            flex-direction: column;
-            position: relative;
-            overflow-y: scroll;
-            height: 600px;
-            width: 80%; /* Adjust the width as needed */
-            max-width: 800px; /* Set a maximum width if desired */
-            margin: 0 auto; /* Center horizontally */
-            background: rgba(13, 12, 12, 0.25);
-            box-shadow: 0 1px 10px 0 #ffffff;
-            backdrop-filter: blur(4px);
-            -webkit-backdrop-filter: blur(4px);
-            border-radius: 10px;
-            scrollbar-width: thin; /* Hide the scrollbar in Firefox */
-            -ms-overflow-style: none; /* Hide the scrollbar in IE/Edge */
-          }
-          
-          .commands-box::-webkit-scrollbar {
-            width: 0.1em; /* Hide the scrollbar in WebKit browsers */
-          }
-          
-          .commands-box::-webkit-scrollbar-thumb {
-            background-color: transparent; /* Hide the scrollbar thumb in WebKit browsers */
-          }
-          .search-bar {
-            background: rgba(13, 12, 12, 0.25);
-                  display: flex;
-                  justify-content: center;
-                  align-items: center;
-                  margin-bottom: 20px;
-              }
-          
-              #search {
-                background: rgba(13, 12, 12, 0.25);
-                  width: 100%;
-                  padding: 10px;
-                  border: 1px solid rgba(13, 12, 12, 0.25);
-                  border-radius: 5px;
-                  outline: none;
-              }
-              .highlighted {
-                  background-color: yellow;
-                  font-weight: bold;
-              }
-              .category-buttons {
-            display: flex;
-            justify-content: space-around;
-            box-shadow: 0 1px 10px 0 #ffffff;
-            background: rgba(13, 12, 12, 0.25);
-            border-radius: 15px;
-            padding: 10px;
-            margin: 10px 0;
-}
+    .category-button {
+        background: transparent;
+        border: none;
+        color: white;
+        cursor: pointer;
+        padding: 5px 10px;
+        border-radius: 50px;
+    }
 
-.category-button {
-background: transparent;
-border: none;
-color: white;
-cursor: pointer;
-padding: 5px 10px;
-border-radius: 50px;
-}
+    .category-button:hover {
+        background: rgba(255, 255, 255, 0.2);
+    }
+    .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+    }
 
-.category-button:hover {
-background: rgba(255, 255, 255, 0.2);
-}
-.header {
-display: flex;
-justify-content: space-between;
-align-items: center;
-margin-bottom: 20px;
-}
+    .search-button {
+        display: flex;
+        align-items: center;
+    }
 
-.search-button {
-display: flex;
-align-items: center;
-}
+    .space {
+        margin: 0 5px;
+    }
 
-.space {
-margin: 0 5px;
-}
+    .search-icon-button {
+      background: rgba(13, 12, 12, 0.25);
+        border: none;
+        border-radius: 15%;
+        padding: 10px;
+        cursor: pointer;
+    }
 
-.search-icon-button {
-background: rgba(13, 12, 12, 0.25);
-border: none;
-border-radius: 15%;
-padding: 10px;
-box-shadow: 0 1px 3px 0 #ffffff;
-cursor: pointer;
-}
+    .hidden {
+        display: none;
+    }
+    .command-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px;
+        background-color: #2b2d31;
+        color: white;
+        margin: 10px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        transition: transform 0.2s;
+        cursor: pointer;
+    }
+    
+    .command-item:hover {
+        transform: scale(1.05);
+    }
 
-.hidden {
-display: none;
-}
-.command-item {
-display: flex;
-justify-content: space-between;
-align-items: center;
-padding: 10px;
-background-color: #2b2d31;
-color: white;
-margin: 10px;
-border-radius: 10px;
-box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-transition: transform 0.2s;
-cursor: pointer;
-}
-
-.command-item:hover {
-transform: scale(1.05);
-}
-
-.command-item span {
-font-weight: bold;
-}
+    .command-item span {
+        font-weight: bold;
+    }
 </style>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 <style>
-#discord-icon-bar {
-position: fixed;
-top: 10px;
-right: 10px;
-z-index: 10000;
-display: flex;
-flex-direction: column;
-align-items: center;
-}
+    #discord-icon-bar {
+        position: fixed;
+        top: 10px;
+        right: 10px;
+        z-index: 10000;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
 
-.discord-icon {
-font-size: 24px;
-margin-bottom: 10px;
-color: #7289DA; /* Discord color */
-cursor: pointer;
-}
-body {
-user-select: none;
-}
-
+    .discord-icon {
+        font-size: 24px;
+        margin-bottom: 10px;
+        color: #7289DA; /* Discord color */
+        cursor: pointer;
+    }
 </style>
                           </style>
                       
                           <div class="header">
                             <div class="category-buttons">
                               <button class="category-button" data-category="All">All</button>
+                              <button class="category-button" data-category="Music">Music</button>
                               <button class="category-button" data-category="Servers">Servers</button>
                               <button class="category-button" data-category="Moderation">Moderation</button>
                               <button class="category-button" data-category="Information">Information</button>

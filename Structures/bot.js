@@ -193,12 +193,10 @@ module.exports = (client) => {
                   if (command && command.subcommands && command.subcommands.length > 0) {
                     const subcommandsText = command.subcommands.map(subcommand => `\`${subcommand.name}\``).join(', ');
         
-                    const subcommandsEmbeds = command.subcommands.map((subcommand) => {
-                        const subcommandParameters = Array.isArray(subcommand.parameters) ? subcommand.parameters.join(', ') : 'N/A';
+                    const subcommandsEmbeds = command.subcommands.map((subcommand) => {;
                         const subcommandAliases = Array.isArray(subcommand.aliases) ? subcommand.aliases.join(', ') : 'N/A';
                         const subcommandusage = subcommand.usage || 'ㅤ';
-                        const subcommandparameters = Array.isArray(command.parameters) && command.parameters.length > 0
-                        ?       command.parameters.join(', ').replace(/`/g, ''): 'N/A';   
+                        const subcommandparameters = Array.isArray(command.parameters) && command.parameters ? command.parameters.map(param => `\`${param.replace(/`/g, '')}\``).join(', ') : '\`N/A\`';
                         return new EmbedBuilder()
                             .setTitle(`Subcommand: ${subcommand.name} (${subcommandAliases})`)
                             .setAuthor({ name: `${module}`, iconURL: client.user.displayAvatarURL({ dynamic: true }) })
@@ -207,9 +205,9 @@ module.exports = (client) => {
                             { name: 'usage', value: `>>> \`\`\`bf\nSyntax ,${subcommand.name} ${subcommandusage}\`\`\`` }
                         )
                         .addFields(
+                          { name: 'Cooldown', value: `\`2.5s\``, inline: true },
                           { name: 'Parameters', value: `${subcommandparameters}`, inline: true },
-                          { name: 'Permissions', value: `${command.permissions}`, inline: true },
-                          { name: 'Cooldown', value: `2.5s`, inline: true }
+                          { name: 'Permissions', value: `\`${command.permissions}\``, inline: true },
                       )
                             .setColor(config.color);
                     });

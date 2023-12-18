@@ -6,7 +6,7 @@ const config = require("./config.json");
 const eventHandler = require('./Structures/event.js');
 const commandHandler = require('./Structures/bot.js');
 const fs = require("fs");
-const axios = require('axios'); // Make sure to install axios using npm install axios
+const axios = require('axios');
 const { openaiApiKey } = require("./config.json");
 const path = require("path")
 const moment = require("moment")
@@ -135,7 +135,6 @@ setInterval(async () => {
                             }
                         }
                     } else {
-                        // Check if the channel was previously marked as live
                         if (channel.isLive) {
                             channel.isLive = false;
                         }
