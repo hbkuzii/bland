@@ -3,6 +3,7 @@ const fs = require('fs');
 const path = require('path');
 const config = require('../../config.json');
 const client = require('../../bland.js');
+const { crypto_aead_xchacha20poly1305_IETF_NPUBBYTES } = require("libsodium-wrappers");
 
 module.exports = {
     name: "help",
@@ -67,12 +68,13 @@ const categoryLinks = allCategories.map(category => `> [\`${category}\`](https:/
 
       embeds.unshift(firstPage);
 
-      await new paginatorInstance(message, {
-        embeds,
-        text: `Page {page} of {pages}`,
-      }
-      ).construct();
-
+     //  await new paginatorInstance(message, {
+      //  embeds,
+//text: `Page {page} of {pages}`,
+     // }
+     // ).construct();
+    //ctx.embed('https://bland.world/help, discord server @ https://bland.world/discord')
+   ctx.embed('View **232 commands** @ https://bland.world/commands')
     } catch (err) {
       console.error(err);
     }

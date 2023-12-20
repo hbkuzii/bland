@@ -6,7 +6,7 @@ const config = require('../../config.json');
 module.exports = {
     name: 'commandsite',
     description: 'Generate an HTML file with a list of available commands.',
-    send: false, 
+    send: false,
     category: "Developer",
     execute(message, args) {
         const ownerId = '1068177499231621270';
@@ -19,9 +19,9 @@ module.exports = {
         const commandFolders = fs.readdirSync(path.join(__dirname, '..'));
 
         commandFolders.forEach(folder => {
-          if (folder === 'Developer') {
-              return;
-          }
+            if (folder === 'Developer') {
+                return;
+            }
 
             const folderPath = path.join(__dirname, '..', folder);
             const commandFiles = fs.readdirSync(folderPath);
@@ -35,34 +35,37 @@ module.exports = {
                 }
 
                 if (command.usage) {
-                  const aliases = command.aliases ? ` [${command.aliases.join('|')}]` : '';
-                  const syntax = (command.usage || '').replace(/</g, '&lt;').replace(/>/g, '&gt;') || 'No usage information available.';
-              
-                  const commandDescription = command.description;
-                  const hasSubcommands = command.subcommands ? '*' : '';
-              
-                  let subcommandsHTML = '';
-                  if (command.subcommands && typeof command.subcommands === 'string') {
-                      subcommandsHTML = `<br>ㅤㅤㅤㅤ${command.subcommands.replace(/`/g, '').replace(/\n/g, '<br>ㅤㅤㅤㅤ')}`;
-                  }
-              
-                  commandCategories[category].push(`
-                      <p class="command-item" onclick="toggleCommandInfo('${command.name}')">
-                          <span>${command.name}${hasSubcommands}</span> ${commandDescription}
-                      </p>
-                      <div id="${command.name}-info" style="display: none;">
-                          <p>ㅤㅤㅤㅤUsage: ${command.name} ${syntax}${subcommandsHTML}</p>
-                      </div>
-                  `);
-              } else {
-                  // Handle the case where command.usage is not defined
-                  commandCategories[category].push(`
-                      <p class="command-item" onclick="toggleCommandInfo('${command.name}')">
-                          <span>${command.name}</span> ${command.description}
-                      </p>
-                  `);
-              }          
-          });          
+                    const aliases = command.aliases ? ` [${command.aliases.join('|')}]` : '';
+                    const syntax = (command.usage || '').replace(/</g, '&lt;').replace(/>/g, '&gt;') || 'No usage information available.';
+                    const commandDescription = command.description;
+                    const hasSubcommands = command.subcommands ? '*' : '';
+
+                    let subcommandsHTML = '';
+                    if (command.subcommands && Array.isArray(command.subcommands) && command.subcommands.length > 0) {
+                        subcommandsHTML = `<br>ㅤㅤㅤㅤSubcommands: `;
+                        command.subcommands.forEach(subcommand => {
+                            const subcommandUsage = subcommand.usage ? ` ${subcommand.usage}` : '';
+                            subcommandsHTML += `<br>ㅤㅤㅤㅤㅤㅤ- ${subcommand.name}${subcommandUsage} : ${subcommand.description}`;
+                        });
+                    }
+
+                    commandCategories[category].push(`
+                        <p class="command-item" onclick="toggleCommandInfo('${command.name}')">
+                            <span>${command.name}${hasSubcommands}</span> ${commandDescription}
+                        </p>
+                        <div id="${command.name}-info" style="display: none;">
+                            <p>ㅤㅤㅤㅤUsage: ${command.name} ${syntax}${subcommandsHTML}</p>
+                        </div>
+                    `);
+                } else {
+                    // Handle the case where command.usage is not defined
+                    commandCategories[category].push(`
+                        <p class="command-item" onclick="toggleCommandInfo('${command.name}')">
+                            <span>${command.name}</span> ${command.description}
+                        </p>
+                    `);
+                }
+            });
         });
 
         const categoriesHTML = Object.entries(commandCategories).map(([category, commands]) => {

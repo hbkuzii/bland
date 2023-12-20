@@ -230,6 +230,22 @@ client.on('messageCreate', (message) => {
   db.set(`level_${message.guild.id}_${message.author.id}`, userLevel);
   db.set(`xp_${message.guild.id}_${message.author.id}`, userXP);
 });
+client.once('ready', () => {
+  const timestamp = new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '');
+  console.log(
+    `${chalk.gray.bold(`[${timestamp}]`)}${chalk.gray.cyan.bold(` INFO`)}${chalk.magentaBright.bold` [bland]`}` +
+    `${chalk.white.bold(` Logged in as ${client.user.tag} with ${client.commands.size} commands`)}`
+  );
+  client.user.setPresence({
+    status: 'dnd',
+    activities: [{
+      type: 'WATCHING',
+      name: 'discord.gg/bland',
+      state: '🎄🎁🎅🏼🦌❄🎊⛄'
+    }]
+  });
+});
+
 client.distube = new DisTube(client, {
   leaveOnStop: false,
   emitNewSongOnly: true,
@@ -320,4 +336,5 @@ client.distube
       client.distube.voices.leave(message)
     });
   });
+  
 client.login(token);
